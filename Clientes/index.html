@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Clientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .menu-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .menu-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 220px;
+        }
+        .menu-buttons button:hover {
+            background-color: #388E3C;
+            transform: scale(1.05);
+        }
+        .menu-buttons button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Menú Clientes</h1>
+        <div class="menu-buttons">
+            <button onclick="location.href='agregar_cliente.html'">Agregar Cliente</button>
+            <button onclick="location.href='ver_clientes.html'">Ver Clientes</button>
+            <button onclick="location.href='editar_cliente.html'">Editar Cliente</button>
+            <button onclick="location.href='eliminar_cliente.html'">Eliminar Cliente</button>
+        </div>
+    </div>
+</body>
+</html>
