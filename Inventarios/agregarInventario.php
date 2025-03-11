@@ -7,9 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <header class="bg-primary-subtle text-primary-emphasis py-3 d-flex align-items-center">
-        <img src="logoFiscalia.png" alt="Logotipo de la Fiscalía" class="ms-3" style="height: 100px;">
-        <h1 class="flex-grow-1 fs-1 m-0">Agregar un producto</h1>
+<header class="bg-primary-subtle text-primary-emphasis py-3 d-flex justify-content-center align-items-center">
+        <h1 class="fs-1 m-0">Agregar un producto</h1>
     </header>
 
     <div class="container mt-5">
