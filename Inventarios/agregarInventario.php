@@ -16,24 +16,21 @@
         <div class="mx-auto p-4 bg-white shadow rounded" style="max-width: 1000px;">
             <h2 class="text-primary-emphasis text-center mb-4">Ingresa los siguientes datos:</h2>
             <form method="POST" action="" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="username" class="form-label fw-bold">Nombre:</label>
-                    <input type="text" id="username" name="Username" class="form-control" required>
+            <div class="mb-3">
+                    <label for="identificador" class="form-label fw-bold">ID</label>
+                    <input type="number" id="identificador" name="Identificador" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="sexo" class="form-label fw-bold">Sexo:</label>
-                    <select id="sexo" name="opciones" class="form-select">
-                        <option value="opcion1">H</option>
-                        <option value="opcion2">M</option>
-                    </select>
+                    <label for="nombre" class="form-label fw-bold">Nombre del producto:</label>
+                    <input type="text" id="nombre" name="Nombre" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="edad" class="form-label fw-bold">Edad:</label>
-                    <input type="number" id="edad" name="Edad" class="form-control" required>
+                    <label for="tipo" class="form-label fw-bold">Tipo de producto:</label>
+                    <input type="text" id="tipo" name="Tipo" class="form-control" required>
                 </div>
                  <div class="mb-3">
-                    <label for="nombreLicenciatura" class="form-label fw-bold">Nombre de licenciatura:</label>
-                    <input type="text" id="nombreLicenciatura" name="NombreLicenciatura" class="form-control" required>
+                    <label for="descripcion" class="form-label fw-bold">Descripción del producto:</label>
+                    <input type="text" id="descripcion" name="Descripcion" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label for="cedulaLicenciatura" class="form-label fw-bold">Cédula de licenciatura:</label>
