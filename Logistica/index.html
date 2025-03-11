@@ -1,12 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DPTO. Logistica</title>
-    
+    <title>DPTO. Logística</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        nav {
+            background-color: #4caf50;
+            padding: 1rem;
+        }
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #ffeb3b;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .section h2 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+        footer {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
-    <H1>esta es la carpeta del departamento de Logistica</H1>
+    <header>
+        <h1>Departamento De Logística</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#acerca-de">Acerca de</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="section" id="inicio">
+            <h2>Bienvenido al Departamento de Logística</h2>
+            <p>Somos líderes en la gestión y optimización de procesos logísticos. Nuestra misión es garantizar la eficiencia y la satisfacción del cliente en cada paso del camino.</p>
+        </div>
+
+        <div class="section" id="servicios">
+            <h2>Nuestros Servicios</h2>
+            <ul>
+                <li>Gestión de transporte</li>
+                <li>Almacenamiento y distribución</li>
+                <li>Optimización de cadenas de suministro</li>
+            </ul>
+        </div>
+
+        <div class="section" id="contacto">
+            <h2>Contacto</h2>
+            <p>Email: info@logistica.com</p>
+            <p>Teléfono: +54 9 1234-5678</p>
+        </div>
+
+        <div class="section" id="acerca-de">
+            <h2>Acerca de Nosotros</h2>
+            <p>Con más de 10 años de experiencia, nos especializamos en soluciones logísticas innovadoras y sostenibles.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Departamento De Logística. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>
