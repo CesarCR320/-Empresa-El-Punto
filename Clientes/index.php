@@ -51,7 +51,7 @@
     <div class="menu-container">
         <h1>Menú Clientes</h1>
         <?php
-            
+            include 'conexion.php';
         ?>
         <div class="menu-buttons">
             <button onclick="window.location='agregar_cliente.php'">Agregar Cliente</button>
