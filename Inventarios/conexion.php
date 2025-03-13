@@ -3,7 +3,7 @@
     $usuario = "root";
     $password = "root";
     $base_datos = "elPunto";
-
+    //conexion
     $conexion = new mysqli($servidor, $usuario, $password, $base_datos);
 
     if($conexion){
