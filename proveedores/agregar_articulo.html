@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Artículo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Agregar Artículo</h1>
+    <form action="procesar_articulo.php" method="POST">
+        <label for="nombre">Nombre del Artículo:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="categoria">Categoría:</label>
+        <input type="text" id="categoria" name="categoria" required>
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" required>
+        <label for="stock">Cantidad en Stock:</label>
+        <input type="number" id="stock" name="stock" required>
+        <button type="submit">Guardar</button>
+    </form>
+    <button onclick="location.href='index.html'">Volver al Menú</button>
+</body>
+</html>
