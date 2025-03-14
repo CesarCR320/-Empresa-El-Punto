@@ -20,32 +20,49 @@
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Correo</th>
+            <th>Dirección</th>
+            <th>RFC</th>
             <th>Teléfono</th>
+            <th>Correo</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Juan Pérez</td>
-            <td>juanperez@gmail.com</td>
-            <td>123-456-7890</td>
-            <td>
-              <button class="btn btn-primary btn-sm">Editar</button>
-              <button class="btn btn-danger btn-sm">Eliminar</button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>María López</td>
-            <td>marialopez@gmail.com</td>
-            <td>987-654-3210</td>
-            <td>
-              <button class="btn btn-primary btn-sm">Editar</button>
-              <button class="btn btn-danger btn-sm">Eliminar</button>
-            </td>
-          </tr>
+          <?php
+          // Conexión a la base de datos
+          $conn = new mysqli("localhost", "root", "", "clientes");
+
+          // Verificar la conexión
+          if ($conn->connect_error) {
+              die("Conexión fallida: " . $conn->connect_error);
+          }
+
+          // Consulta SQL para obtener los clientes
+          $sql = "SELECT id, Nombre, Direccion, RFC, Telefono, Correo FROM clientes";
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                  echo "<tr>";
+                  echo "<td>" . $row["id"] . "</td>";
+                  echo "<td>" . $row["Nombre"] . "</td>";
+                  echo "<td>" . $row["Direccion"] . "</td>";
+                  echo "<td>" . $row["RFC"] . "</td>";
+                  echo "<td>" . $row["Telefono"] . "</td>";
+                  echo "<td>" . $row["Correo"] . "</td>";
+                  echo "<td>
+                          <a href='editar_cliente.php?id=" . $row["id"] . "' class='btn btn-primary btn-sm'>Editar</a>
+                          <a href='eliminar_cliente.php?id=" . $row["id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Seguro que deseas eliminar este cliente?\")'>Eliminar</a>
+                        </td>";
+                  echo "</tr>";
+              }
+          } else {
+              echo "<tr><td colspan='7' class='text-center'>No hay clientes registrados</td></tr>";
+          }
+
+          // Cerrar conexión
+          $conn->close();
+          ?>
         </tbody>
       </table>
 

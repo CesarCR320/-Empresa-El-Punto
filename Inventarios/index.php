@@ -1,3 +1,6 @@
+<?php
+    include 'conexion.php';
+?>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +14,7 @@
     <header class="bg-primary-subtle text-primary-emphasis py-3 d-flex justify-content-center align-items-center">
         <h1 class="fs-1 m-0">Menú Inventarios</h1>
     </header>
+    
 
     <div class="container mt-5">
         <div class="mx-auto p-4 bg-white shadow rounded" style="max-width: 600px;">
