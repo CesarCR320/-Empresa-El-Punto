@@ -2,7 +2,7 @@
             <div class="contenedor contenedor-footer">
                 <nav class="navegacion">
                     <a href="faq.php">FAQ</a>
-                    <a href="nuevoticket.php">Nuevo Ticket</a>
+                    <a href="nuevo.php">Nuevo Ticket</a>
                     <a href="seguimiento.php">Seguimiento</a>
                 </nav>
             </div>

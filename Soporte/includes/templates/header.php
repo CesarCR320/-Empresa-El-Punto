@@ -27,7 +27,7 @@
                 <div class="derecha">
                     <nav class="navegacion">
                         <a href="faq.php">FAQ</a>
-                        <a href="nuevoticket.php">Nuevo Ticket</a>
+                        <a href="nuevo.php">Nuevo Ticket</a>
                         <a href="seguimiento.php">Seguimiento</a>
                         <a href="acceder.php">Acceder</a>
                         <?php if($auth): ?>
