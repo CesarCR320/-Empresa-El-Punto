@@ -143,7 +143,7 @@
                 <h3>Acciones rápidas</h3>
                 <div class="row mb-4">
                     <div class="col-md-3">
-                        <a href="compras/crear_orden.php" class="btn btn-primary w-100">
+                        <a href="./compras/crear_orden.php" class="btn btn-primary w-100">
                             <i class="fas fa-plus-circle"></i> Nueva orden
                         </a>
                     </div>
