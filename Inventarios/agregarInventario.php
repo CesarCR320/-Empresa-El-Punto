@@ -14,11 +14,6 @@
     // Abrir la conexión
     $conn = $conexion->conectar();
 
-    if ($conn) {
-        echo "Conexión exitosa a la base de datos.";
-    } else {
-        echo "Error al conectar a la base de datos.";
-    }
 
     // Cerrar la conexión
     //$conexion->desconectar();
