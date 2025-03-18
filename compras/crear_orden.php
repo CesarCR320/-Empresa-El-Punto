@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DPTO. COMPRAS</title>
-    <H1>esta es la carpeta del departamento de COMPRAS</H1>
+    <title>crear ordenes</title>
+    <h1>vista para crear ordenes de compra</h1>
 </head>
 <body>
     
