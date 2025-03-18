@@ -21,7 +21,7 @@
     }
 
     // Cerrar la conexión
-    $conexion->desconectar();
+    //$conexion->desconectar();
 ?>
 <!DOCTYPE html>
 <html lang="es">
