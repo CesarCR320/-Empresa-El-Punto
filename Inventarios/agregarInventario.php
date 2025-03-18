@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO inventarios (id, nombre, tipo, descripcion, foto) VALUES ('$id', '$nombre', '$tipo', '$descripcion', '$fotoBase64')";
         $conn->query($sql);
 
-        echo "<div class='alert alert-success' role='alert'>Producto agregado exitosamente.</div>";
+       
     } catch (PDOException $e) {
         echo "<div class='alert alert-danger' role='alert'>Error al agregar el producto: " . $e->getMessage() . "</div>";
     }
