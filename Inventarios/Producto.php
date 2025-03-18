@@ -26,42 +26,44 @@
             $this->id = $id;
         }
 
-        //Método get para obtener el valor de usuario
-        public function getUsuario(){
-            return $this->usuario;
+        //Método get para obtener el valor de nombre
+        public function getNombre(){
+            return $this->nombre;
         }
 
-        //Método set para cambiar el valor de usuario
-        public function setUsuario($usuario){
-            $this->usuario = $usuario;
+        //Método set para cambiar el valor de nombre
+        public function setNombre($nombre){
+            $this->nombre = $nombre;
         }
 
-        //Método get para obtener el valor de contrasena
-        public function getContrasena(){
-            return $this->contrasena;
+        //Método get para obtener el valor de tipo
+        public function getTipo(){
+            return $this->tipo;
         }
 
-        //Método set para cambiar el valor de id
-        public function setContrasena($contrasena){
-            $this->contrasena = $contrasena;
+        //Método set para cambiar el valor de tipo
+        public function setTipo($tipo){
+            $this->tipo = $tipo;
         }
 
-        public function verificarDatos($usuario, $contrasena) {
-            if ($this->usuario == $usuario && $this->contrasena == $contrasena) {
-                    header("Location: paginaPrincipalAdministrador.php?id=" . $this->id);
-                    exit;
-                }else{
-                    return false;
-                }        
+        //Método get para obtener el valor de descripcion
+        public function getDescripcion(){
+            return $this->descripcion;
         }
 
-        public function verificarId($idObtenido, $archivoDestino){
-            if($this->id == $idObtenido){
-                // Redirigir a mostrarCamposAdmin.php y pasar el id por la URL
-                header("Location: " . $archivoDestino . "?id=" . $this->id);
-                exit;
-            }
-            return false;
+        //Método set para cambiar el valor de descripcion
+        public function setDescripcion($descripcion){
+            $this->descripcion = $descripcion;
+        }
+
+        //Método get para obtener el valor de foto
+        public function getFoto(){
+            return $this->foto;
+        }
+
+        //Método set para cambiar el valor de foto
+        public function setFoto($foto){
+            $this->foto = $foto;
         }
 
     }
