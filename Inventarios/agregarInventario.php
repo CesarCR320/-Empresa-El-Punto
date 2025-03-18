@@ -13,8 +13,7 @@
 
     // Abrir la conexión
     $conn = $conexion->conectar();
-
-
+    
     // Cerrar la conexión
     //$conexion->desconectar();
 ?>
