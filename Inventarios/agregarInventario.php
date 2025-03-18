@@ -1,3 +1,28 @@
+<?php
+    // Incluir la clase
+    require_once 'Conexion.php';
+
+    // Tus datos de conexión
+    $servidor = "localhost";
+    $usuario = "root";
+    $password = "root";
+    $base_datos = "elPunto";
+
+    // Crear instancia de la clase Conexion
+    $conexion = new Conexion($servidor, $usuario, $password, $base_datos);
+
+    // Abrir la conexión
+    $conn = $conexion->conectar();
+
+    if ($conn) {
+        echo "Conexión exitosa a la base de datos.";
+    } else {
+        echo "Error al conectar a la base de datos.";
+    }
+
+    // Cerrar la conexión
+    $conexion->desconectar();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
