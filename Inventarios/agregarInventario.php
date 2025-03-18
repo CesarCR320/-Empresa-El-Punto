@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Consulta SQL para insertar los datos
-        $sql = "INSERT INTO productos (id, nombre, tipo, descripcion, foto) VALUES ('$id', '$nombre', '$tipo', '$descripcion', '$fotoBase64')";
+        $sql = "INSERT INTO inventarios (id, nombre, tipo, descripcion, foto) VALUES ('$id', '$nombre', '$tipo', '$descripcion', '$fotoBase64')";
         $conn->query($sql);
 
         echo "<div class='alert alert-success' role='alert'>Producto agregado exitosamente.</div>";
