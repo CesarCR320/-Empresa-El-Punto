@@ -15,8 +15,15 @@ $conexion = new Conexion($servidor, $usuario, $password, $base_datos);
 $conn = $conexion->conectar();
 
 // Ejecutar la consulta para obtener productos
-$sql = "SELECT id, nombre, tipo, descripcion, foto FROM productos";
+$sql = "SELECT id, nombre, tipo, descripcion FROM inventarios";
 $result = $conn->query($sql);
+
+// Verificar si hay productos
+if ($result->rowCount() > 0) {
+    $productos = $result->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $productos = [];
+}
 
 // Cerrar conexión
 $conexion->desconectar();
@@ -38,17 +45,14 @@ $conexion->desconectar();
 <div class="container mt-5">
     <div class="bg-white p-4 shadow rounded">
         <?php
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
+        if (count($productos) > 0) {
+            foreach ($productos as $row) {
                 echo '<div class="row mb-4">';
-                echo '<div class="col-md-3">';
-                echo '<img src="data:image/jpeg;base64,' . $row['foto'] . '" alt="Foto del producto" class="img-fluid border rounded" style="height: 150px; width: 150px; object-fit: cover;">';
-                echo '</div>';
                 echo '<div class="col-md-9">';
-                echo '<p><b>ID:</b> ' . $row['id'] . '</p>';
-                echo '<p><b>Nombre:</b> ' . $row['nombre'] . '</p>';
-                echo '<p><b>Tipo:</b> ' . $row['tipo'] . '</p>';
-                echo '<p><b>Descripción:</b> ' . $row['descripcion'] . '</p>';
+                echo '<p><b>ID:</b> ' . htmlspecialchars($row['id']) . '</p>';
+                echo '<p><b>Nombre:</b> ' . htmlspecialchars($row['nombre']) . '</p>';
+                echo '<p><b>Tipo:</b> ' . htmlspecialchars($row['tipo']) . '</p>';
+                echo '<p><b>Descripción:</b> ' . htmlspecialchars($row['descripcion']) . '</p>';
                 echo '</div>';
                 echo '</div>';
                 echo '<hr>'; // Línea horizontal

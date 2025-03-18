@@ -23,7 +23,7 @@
                     <img src="eye.svg" style="height: 1.5rem">
                 </div>
                 <div class="d-flex justify-content-center mt-2">
-                    <button type="button" class="btn btn-outline-primary btn-lg" onclick="window.location.href='mostrarInventario.php'">Mostrar</button>
+                    <button type="button" class="btn btn-outline-primary btn-lg" onclick="window.location.href='mostrar.php'">Mostrar</button>
                 </div>
             </div>
             <div class="input-group d-flex justify-content-center mt-3">
