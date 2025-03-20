@@ -7,20 +7,25 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Asegura que el contenedor ocupe al menos el 100% del alto de la pantalla */
-        .full-height {
-            min-height: 100vh;
-        }
-                /* Estilo para hacer los botones más anchos */
-                .btn-wide {
-            width: 100%;  /* Ajusta el valor al que necesites */
+        /* Bajar la altura del bloque (menos padding y margen) */
+        .custom-blockquote {
+            padding: 10px 20px; /* Ajusta el padding (espaciado interno) */
+            margin-bottom: 10px; /* Ajusta el margen inferior */
         }
 
+        /* Hacer el texto más grande */
+        .custom-blockquote p {
+            font-size: 1.5rem;  /* Aumenta el tamaño del texto */
+            font-weight: bold;  /* Opcional: puedes hacer que el texto sea más grueso */
+        }
     </style>
 </head>
 <body>
-
-    <h1>Bienvenido Al Inicio De Sesión</h1>
+    {
+    <blockquote class="blockquote text-center custom-blockquote">
+        <p class="mb-0">Bienvenido Al Inicio De Sesión</p>
+    </blockquote>
+    }
 
     <div class="container full-height d-flex justify-content-center align-items-center">
         <div class="text-center">
