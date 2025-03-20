@@ -1,6 +1,5 @@
 <?php
 
-echo "hola estoy en el archivo de conexion";
 
 $servidor = "localhost";
 $usuario = "root";
@@ -10,7 +9,18 @@ $base_datos = "el punto";
 $conexion = new mysqli($servidor, $usuario, $password, $base_datos);
 
 if($conexion){
-    echo "estoy conectado";
+    $sql = "select * from ventas";
+    $tablaVentas = $conexion->query($sql);
+
+    if($tablaVentas->num_rows >0){ 
+        while ($fila = $tablaVentas->fetch_assoc()) {
+            //echo "ID: ".$fila['id'] . "nombre: " . $fila['nombre_cliente']; 
+        }
+
+    }
+    else{
+        echo "la tabla ventas no tiene registros";
+    } 
 }
 else{
     echo "revisa, no estoy conectado";

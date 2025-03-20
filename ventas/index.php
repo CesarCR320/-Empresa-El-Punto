@@ -3,81 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous" />
     <title>Módulo de Ventas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Módulo de Ventas</h2>
-        <form>
-            <label for="cliente">Nombre del Cliente:</label>
-            <input type="text" id="cliente" name="cliente" required>
-
-            <label for="producto">Producto:</label>
-            <select id="producto" name="producto" required>
-                <option value="producto1">Producto 1</option>
-                <option value="producto2">Producto 2</option>
-                <option value="producto3">Producto 3</option>
-            </select>
-
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" min="1" required>
-
-            <label for="precio">Precio Unitario:</label>
-            <input type="number" id="precio" name="precio" step="0.01" required>
-
-            <button type="submit">Procesar Venta</button>
-        </form>
-    </div>
-    <?php
-        include 'conexion.php';
+        <h1>Módulo de Ventas</h1>
+        <?php
+    include 'conexion.php';
     ?>
-    </body>
+        <table class="table mt-4 table-striped table-dark">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+    <tbody>
+    <?php
+        foreach ($tablaVentas as $key => $fila) {
+
+        ?>
+          <tr>
+            <th scope="row"><?php echo $key + 1; ?></th>
+            <td><?php echo $fila['nombre_cliente']; ?></td>
+            <td><?php echo $fila['producto']; ?></td>
+            <td>
+              <button type="button" class="btn btn-warning">Editar</button>
+              <button type="button" class="btn btn-danger">Eliminar</button>
+              <button type="button" class="btn btn-success">Ver</button>
+            </td>
+          </tr>
+        <?php
+        }
+        ?>
+      </tbody>
+    </table>
+    </div>
 </body>
 </html>
