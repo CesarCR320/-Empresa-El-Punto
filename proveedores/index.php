@@ -49,8 +49,7 @@
         
         <h2>Opciones</h2>
         <div class="menu-buttons">
-            <button onclick="location.href='form_agregar.html'">Agregar Proveedor</button>
-            <button onclick="location.href='agregar_articulos.html'">Agregar Artículos</button>
+            <button onclick="location.href='form_agregar.php'">Agregar Proveedor</button>
             <button onclick="location.href='ver_proveedores.php'">Ver Proveedores</button>
             <button onclick="location.href='editar_proveedor.html'">Editar Proveedor</button>
             <button onclick="location.href='eliminar_proveedor.html'">Eliminar Proveedor</button>
