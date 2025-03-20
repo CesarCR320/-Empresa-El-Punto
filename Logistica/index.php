@@ -232,7 +232,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
 </head>
 <body>
     <header>
-        <h1>Departamento De Logística</h1>
+        <h1>Departamento De Logística Christopher</h1>
     </header>
 
     <nav>
