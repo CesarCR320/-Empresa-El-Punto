@@ -29,17 +29,10 @@
         </thead>
         <tbody>
           <?php
-          // Conexión a la base de datos
-          $conn = new mysqli("localhost", "root", "", "clientes");
-
-          // Verificar la conexión
-          if ($conn->connect_error) {
-              die("Conexión fallida: " . $conn->connect_error);
-          }
-
-          // Consulta SQL para obtener los clientes
+          include "conexion.php";
+          
           $sql = "SELECT id, Nombre, Direccion, RFC, Telefono, Correo FROM clientes";
-          $result = $conn->query($sql);
+          $result = $conexion->query($sql);
 
           if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
@@ -61,12 +54,12 @@
           }
 
           // Cerrar conexión
-          $conn->close();
+          $conexion->close();
           ?>
         </tbody>
       </table>
 
-      <a href="../index.html" class="btn btn-secondary">Volver</a>
+      <a href="./index.html" class="btn btn-secondary">Volver</a>
     </div>
 
     <script

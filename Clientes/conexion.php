@@ -8,7 +8,6 @@ $password = "";
 $base_datos = "clientes";
 
 $conexion = new mysqli($servidor, $usuario, $password, $base_datos);
-return $conexion;
 
 /*if ($conexion) {
     echo "Estoy conectado";
