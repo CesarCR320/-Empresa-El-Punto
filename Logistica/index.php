@@ -53,14 +53,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
+        body {
+            background-image: url('Fondo_Logistica.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Para que el fondo no se desplace al hacer scroll */
+            min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la página */
+        }
         header {
-            background-color: #2e7d32;
+            background-color: rgba(46, 125, 50, 0.6); /* Reducimos la opacidad para mayor transparencia */
             color: white;
             text-align: center;
             padding: 1rem;
         }
         nav {
-            background-color: #4caf50;
+            background-color: rgba(76, 175, 80, 0.6); /* Reducimos la opacidad para mayor transparencia */
             padding: 1rem;
         }
         nav ul {
@@ -81,9 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
+            background-color: rgba(255, 255, 255, 0.7); /* Reducimos la opacidad para mayor transparencia */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .section {
             margin-bottom: 2rem;
+            padding: 1rem;
         }
         .section h2 {
             color: #2e7d32;
@@ -101,6 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             width: 100%;
             padding: 0.5rem;
             margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para los campos de entrada */
         }
         .contact-form button {
             background-color: #4caf50;
@@ -116,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             width: 100%;
             border-collapse: collapse;
             margin-top: 2rem;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8); /* Reducimos la opacidad para mayor transparencia */
         }
         .data-table th, .data-table td {
             padding: 0.75rem;
@@ -124,14 +137,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             border: 1px solid #ddd;
         }
         .data-table th {
-            background-color: #4caf50;
+            background-color: rgba(76, 175, 80, 0.8); /* Fondo semitransparente para los encabezados de la tabla */
             color: white;
         }
         .data-table tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: rgba(249, 249, 249, 0.8); /* Fondo semitransparente para filas pares */
         }
         .data-table tr:hover {
-            background-color: #f1f1f1;
+            background-color: rgba(241, 241, 241, 0.8); /* Fondo semitransparente al pasar el mouse */
         }
         .action-btn {
             padding: 5px 10px;
@@ -160,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             background-color: #f57c00;
         }
         footer {
-            background-color: #2e7d32;
+            background-color: rgba(46, 125, 50, 0.6); /* Reducimos la opacidad para mayor transparencia */
             color: white;
             text-align: center;
             padding: 1rem;
@@ -182,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             align-items: center;
         }
         .modal-content {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente para los modales */
             padding: 20px;
             border-radius: 5px;
             text-align: center;
@@ -227,6 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             width: 100%;
             padding: 0.5rem;
             margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para los campos de entrada en modales */
         }
     </style>
 </head>
