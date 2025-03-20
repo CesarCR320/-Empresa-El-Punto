@@ -1,6 +1,6 @@
 <?php
 
-echo "Hola estoy en el archivo de conexion";
+//echo "Hola estoy en el archivo de conexion";
 
 $servidor = "localhost";
 $usuario = "root";
@@ -8,8 +8,9 @@ $password = "";
 $base_datos = "clientes";
 
 $conexion = new mysqli($servidor, $usuario, $password, $base_datos);
+return $conexion;
 
-if ($conexion) {
+/*if ($conexion) {
     echo "Estoy conectado";
     $sql = "select * from clientes";
     $resultado = $conexion->query($sql);
@@ -23,3 +24,4 @@ if ($conexion) {
 } else {
     echo "No estoy conectado";
 }
+    */
