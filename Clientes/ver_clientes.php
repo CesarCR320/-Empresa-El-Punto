@@ -59,7 +59,7 @@
         </tbody>
       </table>
 
-      <a href="../clientes.html" class="btn btn-secondary">Volver</a>
+      <a href="./index.html" class="btn btn-secondary">Volver</a>
     </div>
 
     <script
