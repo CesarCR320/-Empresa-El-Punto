@@ -1,27 +1,22 @@
 <?php
+$conexion = new mysqli("localhost", "root", "", "el punto");
 
-
-$servidor = "localhost";
-$usuario = "root";
-$password = "";
-$base_datos = "el punto";
-
-$conexion = new mysqli($servidor, $usuario, $password, $base_datos);
-
-if($conexion){
-    $sql = "select * from ventas";
-    $tablaVentas = $conexion->query($sql);
-
-    if($tablaVentas->num_rows >0){ 
-        while ($fila = $tablaVentas->fetch_assoc()) {
-            //echo "ID: ".$fila['id'] . "nombre: " . $fila['nombre_cliente']; 
-        }
-
-    }
-    else{
-        echo "la tabla ventas no tiene registros";
-    } 
+// Verificar conexión
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
-else{
-    echo "revisa, no estoy conectado";
+
+// Consulta para obtener datos
+$sql = "SELECT id, nombre_cliente, producto, cantidad, fecha_venta, precio FROM ventas";
+$resultado = $conexion->query($sql);
+
+if ($resultado) {
+    // Convertir el resultado a un array asociativo
+    $tablaVentas = $resultado->fetch_all(MYSQLI_ASSOC);
+} else {
+    $tablaVentas = [];
+    error_log("Error en la consulta: " . $conexion->error);
 }
+
+// No cierres la conexión aquí si la vas a usar después
+?>
