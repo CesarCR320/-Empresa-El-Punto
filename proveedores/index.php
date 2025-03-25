@@ -50,7 +50,7 @@
         <h2>Opciones</h2>
         <div class="menu-buttons">
             <button onclick="location.href='ver_proveedores.php'">Proveedores</button>
-            <button onclick="location.href='form_agregar.php'">Agregar Proveedor</button>
+            <button onclick="location.href='agregar_proveedor.php'">Agregar Proveedor</button>
 
         </div>
     </div>
