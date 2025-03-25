@@ -20,6 +20,7 @@
     </button>
 
     <?php include 'conexion.php'; ?>
+    <?php include 'insertardatos.php'; ?>
 
     <table class="table mt-4 table-striped table-dark">
       <thead>
@@ -57,11 +58,20 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body">
-            Contenido del formulario para agregar un nuevo profesor...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Guardar cambios</button>
+
+            <form action="insertardatos.php" method="POST">
+              <label for="">ID</label>
+              <input type="text" name="id" id="id" class="form-control">
+              <label for="">Nombre</label>
+              <input type="text" name="nombre" id="nombre" class="form-control">
+              <label for="">Apellidos</label>
+              <input type="text" name="apellidos" id="apellidos" class="form-control">
+              <label for="">Salon</label>
+              <input type="text" name="salon" id="salon" class="form-control">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="subtmit" class="btn btn-primary">Guardar cambios</button>
+            </form>
+
           </div>
         </div>
       </div>
