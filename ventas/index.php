@@ -18,7 +18,7 @@
 <body>
     <div class="container">
         <?php
-        // Mostrar errores (solo para desarrollo)
+        
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         
@@ -31,7 +31,7 @@
         
         <h1 class style="text-align:center;">Módulo de Ventas</h1>
         
-        <!-- Botón para agregar nueva venta -->
+        
         <div class="d-flex justify-content-front btn-agregar">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregar">
                 <i class="bi bi-plus-circle"></i> AGREGAR NUEVA VENTA
@@ -99,7 +99,7 @@
         </table>
     </div>
 
-    <!-- Modal para Agregar -->
+    
     <div class="modal fade" id="modalAgregar" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -139,7 +139,7 @@
         </div>
     </div>
 
-    <!-- Modal para Editar -->
+    
     <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
