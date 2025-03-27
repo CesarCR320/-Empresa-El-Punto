@@ -9,12 +9,11 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <!-- agregar header -->
+    <?php # include '../includes/header.php'; ?>
     
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <?php include '../includes/sidebar.php'; ?> 
             <!-- Contenido principal -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -166,9 +165,7 @@
             </main>
         </div>
     </div>
-
-    <?php include '../includes/footer.php'; ?>
-    
+<?php # include '../includes/footer.php'; ?>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/chart.min.js"></script>
     <script src="../assets/js/custom.js"></script>
