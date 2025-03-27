@@ -6,7 +6,7 @@ echo"Hola estoy en el archivo de conexion";
 $servidor = "localhost";
 $usuario = "root";
 $pasword = "";
-$base_datos = "modolosR";
+$base_datos = "módulosr";
 
 $conexion = new mysqli($servidor, $usuario, $pasword,$base_datos);
 if ($conexion) {
