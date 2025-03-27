@@ -22,7 +22,7 @@
 
         #Validar la ruta del proyecto
         public function ruta() {
-            return "http://localhost/helpdesk/";
+            return "http://localhost/-Empresa-El-Punto/Soporte/";
         }
 
     }

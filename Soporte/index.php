@@ -38,6 +38,43 @@
                             <img src="public/img/avatar-sign.png" alt="">
                         </div>
                         <header class="sign-title">Acceso</header>
+
+                        <?php
+                            if (isset($_GET["m"])) {
+                                switch ($_GET["m"]) {
+                                    case '1':
+                                        ?>
+                                            <div class="alert alert-danger" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <div class="d-flex align-items-center justify-content-start">
+                                                    <i class="icon ion-ios-checkmark alert-icon tx-32 mg-t-5 mg-xs-t-0"></i>
+                                                    <span>El usuario y/o contraseña incorrectos.</span>
+                                                </div>
+                                            </div>
+                                        <?php
+                                        break;
+                                    case '2':
+                                        ?>
+                                            <div class="alert alert-danger" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <div class="d-flex align-items-center justify-content-start">
+                                                    <i class="icon ion-ios-checkmark alert-icon tx-32 mg-t-5 mg-xs-t-0"></i>
+                                                    <span>Los campos están vacíos.</span>
+                                                </div>
+                                            </div>
+                                        <?php
+                                        break;
+                                    default:
+                                        # code...
+                                        break;
+                                }
+                            }
+                        ?>
+                        
                         <div class="form-group">
                             <input type="text" id="e_mail" name="e_mail" class="form-control" placeholder="Correo"/>
                         </div>
