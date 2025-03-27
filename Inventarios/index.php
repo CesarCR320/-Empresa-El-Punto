@@ -3,14 +3,45 @@
 require_once 'Conexion.php';
 
 // Datos de conexión (ajusta estos según tu configuración)
-$servidor = "localhost";
-$usuario = "root";
+$servername = "localhost";
+$username = "root";
 $password = "root";
-$base_datos = "elPunto";
+$dbname = "elPunto";
+
+// Procesar el formulario si se envió
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_item'])) {
+    try {
+        // Crear instancia de conexión
+        $conexion = new Conexion($servername, $username, $password, $dbname);
+        $conn = $conexion->conectar();
+
+        // Obtener datos del formulario
+        $nombre = $_POST['nombre'];
+        $tipo = $_POST['tipo'];
+        $descripcion = $_POST['descripcion'];
+
+        // Preparar y ejecutar la consulta SQL
+        $sql = "INSERT INTO inventarios (nombre, tipo, descripcion) VALUES (:nombre, :tipo, :descripcion)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':descripcion', $descripcion);
+        $stmt->execute();
+
+        // Cerrar conexión
+        $conexion->desconectar();
+
+        // Redirigir para evitar reenvío del formulario
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit();
+    } catch (PDOException $e) {
+        die("Error al guardar el item: " . $e->getMessage());
+    }
+}
 
 try {
-    // Crear instancia de conexión
-    $conexion = new Conexion($servidor, $usuario, $password, $base_datos);
+    // Crear instancia de conexión para mostrar los items
+    $conexion = new Conexion($servername, $username, $password, $dbname);
     $conn = $conexion->conectar();
 
     // Consulta para obtener los items del inventario
@@ -90,7 +121,7 @@ try {
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Modal para agregar nuevo item -->
   <div class="modal fade" id="nuevoinventario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -98,26 +129,26 @@ try {
           <h5 class="modal-title" id="exampleModalLabel">Agregar Item al Inventario</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <div class="modal-body">
-          <form>
+        <form method="POST" action="">
+          <div class="modal-body">
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" required>
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
             <div class="mb-3">
               <label for="tipo" class="form-label">Tipo</label>
-              <input type="text" class="form-control" id="tipo" required>
+              <input type="text" class="form-control" id="tipo" name="tipo" required>
             </div>
             <div class="mb-3">
               <label for="descripcion" class="form-label">Descripción</label>
-              <textarea class="form-control" id="descripcion" rows="3"></textarea>
+              <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" name="agregar_item">Guardar</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
