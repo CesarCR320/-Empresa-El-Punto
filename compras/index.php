@@ -9,7 +9,6 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- agregar header -->
     <?php # include '../includes/header.php'; ?>
     
     <div class="container-fluid">
@@ -151,14 +150,14 @@
                             <i class="fas fa-user-plus"></i> Nuevo proveedor
                         </a>
                     </div>
-                    <!-- <div class="col-md-3">
-                        <a href="cotizaciones/crear_cotizacion.php" class="btn btn-info w-100">
+                    <div class="col-md-3">
+                        <a href="#" class="btn btn-info w-100">
                             <i class="fas fa-file-invoice"></i> Nueva cotización
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="recepcion/registrar_recepcion.php" class="btn btn-warning w-100">
-                            <i class="fas fa-truck-loading"></i> Registrar recepción -->
+                        <a href="#" class="btn btn-warning w-100">
+                            <i class="fas fa-truck-loading"></i> Registrar recepción
                         </a>
                     </div>
                 </div>
