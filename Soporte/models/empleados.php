@@ -3,7 +3,8 @@
         public function login () {
             $conectar = parent::conexion();
             parent::set_names();
-
+            
+            # Verificar si el formulario fue enviado
             if (isset($_POST["enviar"])) {
                 $correo = $_POST["e_mail"];
                 $password = $_POST["e_pass"];
