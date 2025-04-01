@@ -50,8 +50,8 @@
                 <span class="lbl">Soporte</span>
             </span>
             <ul>
-                <li><a href="../NewTicket/"><span class="lbl">Nuevo Ticket</span></a></li>
-                <li><a href="../ConsultTicket/"><span class="lbl">Consultar Ticket</span></a></li>
+                <li><a href="../NuevoTicket/"><span class="lbl">Nuevo Ticket</span></a></li>
+                <li><a href="../ConsultarTicket/"><span class="lbl">Consultar Ticket</span></a></li>
                 <li><a href="documentation.html"><span class="lbl">Documentación</span></a></li>
                 <li><a href="faq.html"><span class="lbl">FAQ Simple</span></a></li>
                 <li><a href="faq-search.html"><span class="lbl">FAQ Búsqueda</span></a></li>
