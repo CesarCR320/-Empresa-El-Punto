@@ -2,60 +2,85 @@
 // Incluir la clase de conexión
 require_once 'Conexion.php';
 
-// Datos de conexión (ajusta estos según tu configuración)
+// Datos de conexión
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "elPunto";
 
-// Procesar el formulario si se envió
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_item'])) {
-    try {
-        // Crear instancia de conexión
-        $conexion = new Conexion($servername, $username, $password, $dbname);
-        $conn = $conexion->conectar();
+// Crear instancia de conexión
+$conexion = new Conexion($servername, $username, $password, $dbname);
+$conn = $conexion->conectar();
 
-        // Obtener datos del formulario
+// Procesar acciones
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['agregar_item'])) {
+        // Agregar nuevo item
         $nombre = $_POST['nombre'];
         $tipo = $_POST['tipo'];
         $descripcion = $_POST['descripcion'];
 
-        // Preparar y ejecutar la consulta SQL
         $sql = "INSERT INTO inventarios (nombre, tipo, descripcion) VALUES (:nombre, :tipo, :descripcion)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':tipo', $tipo);
-        $stmt->bindParam(':descripcion', $descripcion);
-        $stmt->execute();
-
-        // Cerrar conexión
-        $conexion->desconectar();
-
-        // Redirigir para evitar reenvío del formulario
+        $stmt->execute([':nombre' => $nombre, ':tipo' => $tipo, ':descripcion' => $descripcion]);
+        
         header("Location: ".$_SERVER['PHP_SELF']);
         exit();
-    } catch (PDOException $e) {
-        die("Error al guardar el item: " . $e->getMessage());
+    } elseif (isset($_POST['editar_item'])) {
+        // Editar item existente
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $tipo = $_POST['tipo'];
+        $descripcion = $_POST['descripcion'];
+
+        $sql = "UPDATE inventarios SET nombre = :nombre, tipo = :tipo, descripcion = :descripcion WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':id' => $id, ':nombre' => $nombre, ':tipo' => $tipo, ':descripcion' => $descripcion]);
+        
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit();
     }
 }
 
-try {
-    // Crear instancia de conexión para mostrar los items
-    $conexion = new Conexion($servername, $username, $password, $dbname);
-    $conn = $conexion->conectar();
-
-    // Consulta para obtener los items del inventario
-    $sql = "SELECT id, nombre, tipo, descripcion FROM inventarios";
+// Procesar eliminación (GET por simplicidad)
+if (isset($_GET['eliminar'])) {
+    $id = $_GET['id'];
+    $sql = "DELETE FROM inventarios WHERE id = :id";
     $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([':id' => $id]);
     
-    $tablaInventario = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Cerrar conexión
-    $conexion->desconectar();
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
 }
+
+// Obtener datos para editar (si aplica)
+$itemEditar = null;
+if (isset($_GET['editar'])) {
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM inventarios WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([':id' => $id]);
+    $itemEditar = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// Obtener datos para ver (si aplica)
+$itemVer = null;
+if (isset($_GET['ver'])) {
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM inventarios WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([':id' => $id]);
+    $itemVer = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// Consulta para obtener todos los items
+$sql = "SELECT id, nombre, tipo, descripcion FROM inventarios";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$tablaInventario = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Cerrar conexión (al final del script)
+$conexion->desconectar();
 ?>
 
 <!DOCTYPE html>
@@ -103,9 +128,9 @@ try {
                   <td><?php echo htmlspecialchars($item['tipo']); ?></td>
                   <td><?php echo htmlspecialchars($item['descripcion']); ?></td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-warning btn-sm">Editar</button>
-                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-                    <button type="button" class="btn btn-success btn-sm">Ver</button>
+                    <a href="?ver&id=<?php echo $item['id']; ?>" class="btn btn-success btn-sm">Ver</a>
+                    <a href="?editar&id=<?php echo $item['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="?eliminar&id=<?php echo $item['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este item?')">Eliminar</a>
                   </td>
                 </tr>
               <?php } ?>
@@ -152,6 +177,78 @@ try {
       </div>
     </div>
   </div>
+
+  <!-- Modal para editar item -->
+  <?php if ($itemEditar) { ?>
+  <div class="modal fade show" id="editarInventario" tabindex="-1" aria-labelledby="editModalLabel" style="display: block; padding-right: 17px;" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-white">
+          <h5 class="modal-title" id="editModalLabel">Editar Item</h5>
+          <a href="?" class="btn-close btn-close-white" aria-label="Cerrar"></a>
+        </div>
+        <form method="POST" action="">
+          <div class="modal-body">
+            <input type="hidden" name="id" value="<?php echo $itemEditar['id']; ?>">
+            <div class="mb-3">
+              <label for="nombre_edit" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre_edit" name="nombre" value="<?php echo htmlspecialchars($itemEditar['nombre']); ?>" required>
+            </div>
+            <div class="mb-3">
+              <label for="tipo_edit" class="form-label">Tipo</label>
+              <input type="text" class="form-control" id="tipo_edit" name="tipo" value="<?php echo htmlspecialchars($itemEditar['tipo']); ?>" required>
+            </div>
+            <div class="mb-3">
+              <label for="descripcion_edit" class="form-label">Descripción</label>
+              <textarea class="form-control" id="descripcion_edit" name="descripcion" rows="3"><?php echo htmlspecialchars($itemEditar['descripcion']); ?></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="?" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-warning text-white" name="editar_item">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+  <?php } ?>
+
+  <!-- Modal para ver item -->
+  <?php if ($itemVer) { ?>
+  <div class="modal fade show" id="verInventario" tabindex="-1" aria-labelledby="viewModalLabel" style="display: block; padding-right: 17px;" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="viewModalLabel">Detalles del Item</h5>
+          <a href="?" class="btn-close btn-close-white" aria-label="Cerrar"></a>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-bold">ID</label>
+            <p><?php echo htmlspecialchars($itemVer['id']); ?></p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Nombre</label>
+            <p><?php echo htmlspecialchars($itemVer['nombre']); ?></p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Tipo</label>
+            <p><?php echo htmlspecialchars($itemVer['tipo']); ?></p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Descripción</label>
+            <p><?php echo nl2br(htmlspecialchars($itemVer['descripcion'])); ?></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="?" class="btn btn-secondary">Cerrar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+  <?php } ?>
 
 </body>
 
