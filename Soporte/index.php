@@ -1,5 +1,5 @@
 <?php
-    # Llamar a la conexión
+    # Llamar a la conexión de la base de datos
     require_once "config/conexion.php";
 
     # Verificar si el formulario fue enviado
@@ -42,7 +42,7 @@
                         <?php
                             if (isset($_GET["m"])) {
                                 switch ($_GET["m"]) {
-                                    case '1':
+                                    case '1': # Mensaje de error por usuario y/o contraseña incorrectos
                                         ?>
                                             <div class="alert alert-danger" role="alert">
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -55,7 +55,7 @@
                                             </div>
                                         <?php
                                         break;
-                                    case '2':
+                                    case '2': # Mensaje de error por campos vacíos
                                         ?>
                                             <div class="alert alert-danger" role="alert">
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -69,7 +69,7 @@
                                         <?php
                                         break;
                                     default:
-                                        # code...
+                                        # Código por defecto
                                         break;
                                 }
                             }
@@ -117,4 +117,15 @@
         </script>
         <script src="public/js/app.js"></script>
     </body>
+
+    <!-- Footer -->
+    <div class="page-center-in" style="text-align: center; padding: 20px; background-color: #f8f9fa; position: fixed; bottom: 0; width: 100%;">
+        <?php
+            # Obtener el año actual
+            $today = date("F, Y");
+            
+            # Mostrar el año actual
+            echo "&copy; " . $today . " Laughing Man Tech Services | Todos los derechos reservados";
+        ?>
+    </div>
 </html>

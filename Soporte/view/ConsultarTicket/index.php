@@ -4,7 +4,7 @@
 ?>
 
 <?php   require_once '../Main/head.php'; ?>
-        <title>Soporte</title>
+        <title>Soporte :: Consultar Ticket</title>
     </head>
     <body class="with-side-menu">
 
@@ -21,7 +21,7 @@
             </div><!--.container-fluid-->
         </div><!--.page-content-->
         <?php   require_once '../Main/js.php'; ?>
-        <script type="text/javascript" src="home.js"></script>
+        <script type="text/javascript" src="consult-ticket.js"></script>
     </body>
 </html>
 <?php
