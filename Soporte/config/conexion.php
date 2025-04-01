@@ -10,7 +10,7 @@
                 $conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=helpdesk", "root", "");
                 return $conectar;
             } catch (Exception $e) {
-                print "¡Error BD!: Esta madre no jala, culpa al primer pendejo que se atraviese" . $e->getMessage() . "<br/>";
+                print "¡Error Fatal!: La cagaste y esta madre no jala, culpa al primer pendejo que se atraviese " . $e->getMessage() . "<br/>";
                 die();
             }
         }
@@ -21,7 +21,7 @@
         }
 
         #Validar la ruta del proyecto
-        public function ruta() {
+        public static function ruta() {
             return "http://localhost/-Empresa-El-Punto/Soporte/";
         }
 

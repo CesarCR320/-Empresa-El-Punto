@@ -1,5 +1,10 @@
+<?php
+    require_once '../../config/conexion.php';
+    if (isset($_SESSION['e_id'])) {
+?>
+
 <?php   require_once '../Main/head.php'; ?>
-        <title>Soporte</title>
+        <title>Soporte :: Nuevo Ticket</title>
     </head>
     <body class="with-side-menu">
 
@@ -9,11 +14,18 @@
         
         <?php   require_once '../Main/nav.php'; ?>
 
+        <!-- Contenido de la página -->
         <div class="page-content">
             <div class="container-fluid">
-                <h1>Nuevo Ticket</h1>
+                Blank page.
             </div><!--.container-fluid-->
         </div><!--.page-content-->
         <?php   require_once '../Main/js.php'; ?>
+        <script type="text/javascript" src="new-ticket.js"></script>
     </body>
 </html>
+<?php
+    } else {
+        header('Location:'.Conectar::ruta().'index.php');
+    }
+?>

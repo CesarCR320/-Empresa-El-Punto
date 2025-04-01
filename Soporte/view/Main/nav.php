@@ -66,36 +66,6 @@
                 <span class="label label-custom label-pill label-danger">69</span>
             </a>
         </li>
-
-        <!-- Menu Genérico -->
-        <li class="grey with-sub">
-            <span>
-                <span class="font-icon font-icon-burger"></span>
-                <span class="lbl">Menu Anidado</span>
-            </span>
-            <ul>
-                <li><a href="#"><span class="lbl">Level 1</span></a></li>
-                <li><a href="#"><span class="lbl">Level 1</span></a></li>
-                <li class="with-sub">
-                    <span>
-                        <span class="lbl">Level 2</span>
-                    </span>
-                    <ul>
-                        <li><a href="#"><span class="lbl">Level 2</span></a></li>
-                        <li><a href="#"><span class="lbl">Level 2</span></a></li>
-                        <li class="with-sub">
-                            <span>
-                                <span class="lbl">Level 3</span>
-                            </span>
-                            <ul>
-                                <li><a href="#"><span class="lbl">Level 3</span></a></li>
-                                <li><a href="#"><span class="lbl">Level 3</span></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
     </ul>
 
     <section>

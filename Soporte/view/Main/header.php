@@ -3,7 +3,7 @@
 
         <a href="#" class="site-logo">
             <img class="hidden-md-down" src="../../public/img/logo-black.png" alt="">
-            <img class="hidden-lg-up" src="../../public/img/logo-2-mob.png" alt="">
+            <img class="hidden-lg-up" src="../../public/img/logo-black-mob.png" alt="">
         </a>
 
         <button id="show-hide-sidebar-toggle" class="show-hide-sidebar">
@@ -23,11 +23,11 @@
                             <img src="../../public/img/avatar-2-64.png" alt="">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Perfil</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Ajustes</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Ayuda</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+                            <a class="dropdown-item" href="../Main/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Cerrar sesión</a>
                         </div>
                     </div>
 
