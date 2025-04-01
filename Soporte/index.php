@@ -117,4 +117,15 @@
         </script>
         <script src="public/js/app.js"></script>
     </body>
+
+    <!-- Footer -->
+    <div class="page-center-in" style="text-align: center; padding: 20px; background-color: #f8f9fa; position: fixed; bottom: 0; width: 100%;">
+        <?php
+            # Obtener el año actual
+            $today = date("F, Y");
+            
+            # Mostrar el año actual
+            echo "&copy; " . $today . " Laughing Man Tech Services | Todos los derechos reservados";
+        ?>
+    </div>
 </html>
