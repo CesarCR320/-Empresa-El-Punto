@@ -6,12 +6,21 @@ echo"Hola estoy en el archivo de conexion";
 $servidor = "localhost";
 $usuario = "root";
 $pasword = "";
-$base_datos = "elpunto";
+$base_datos = "módulosr";
 
 $conexion = new mysqli($servidor, $usuario, $pasword,$base_datos);
 if ($conexion) {
-    echo "estoy conectado";    
+    $sql = "select * from Roles";
+    $tablaRoles = $conexion->query($sql);
+
+    if ($tablaRoles->num_rows > 0) {
+        while ($fila = $tablaRoles->fetch_assoc()) {
+            echo "----------------------ID: " . $fila['id_rol'] . "Nombre: " . $fila['nombre_rol'] . "<br>";
+        }
+    } else {
+        echo "La tabla roles no tiene registros";
+    }
 } else {
-    echo "no estoy conectado revisa";
+    echo "No estoy conectado revisa";
 }
 

@@ -9,12 +9,10 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <?php # include '../includes/header.php'; ?>
     
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <?php include '../includes/sidebar.php'; ?> 
             <!-- Contenido principal -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -152,23 +150,21 @@
                             <i class="fas fa-user-plus"></i> Nuevo proveedor
                         </a>
                     </div>
-                    <!-- <div class="col-md-3">
-                        <a href="cotizaciones/crear_cotizacion.php" class="btn btn-info w-100">
+                    <div class="col-md-3">
+                        <a href="#" class="btn btn-info w-100">
                             <i class="fas fa-file-invoice"></i> Nueva cotización
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="recepcion/registrar_recepcion.php" class="btn btn-warning w-100">
-                            <i class="fas fa-truck-loading"></i> Registrar recepción -->
+                        <a href="#" class="btn btn-warning w-100">
+                            <i class="fas fa-truck-loading"></i> Registrar recepción
                         </a>
                     </div>
                 </div>
             </main>
         </div>
     </div>
-
-    <?php include '../includes/footer.php'; ?>
-    
+<?php # include '../includes/footer.php'; ?>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/chart.min.js"></script>
     <script src="../assets/js/custom.js"></script>
