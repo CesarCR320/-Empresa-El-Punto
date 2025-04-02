@@ -4,7 +4,7 @@
 ?>
 
 <?php   require_once '../Main/head.php'; ?>
-        <title>Soporte</title>
+        <title>Soporte :: Principal</title>
     </head>
     <body class="with-side-menu">
 

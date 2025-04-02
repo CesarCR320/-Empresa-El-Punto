@@ -16,7 +16,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Sporte</title>
+        <title>Sporte :: Iniciar Sesión</title>
 
         <link href="public/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
         <link href="public/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
@@ -37,7 +37,7 @@
                         <div class="sign-avatar">
                             <img src="public/img/avatar-sign.png" alt="">
                         </div>
-                        <header class="sign-title">Acceso</header>
+                        <header class="sign-title" lbl="lbltitulo">Acceso Usuario</header>
 
                         <?php
                             if (isset($_GET["m"])) {
@@ -81,11 +81,17 @@
                         <div class="form-group">
                             <input type="password" id="e_pass" name="e_pass" class="form-control" placeholder="Contraseña"/>
                         </div>
+                        
                         <div class="form-group">
                             <div class="float-left reset">
-                                <a href="reset-password.html">Restablecer contraseña</a>
+                                <a href="#" id="btnsoporte">Acceso Soporte</a>
+                            </div>
+
+                            <div class="float-right reset">
+                                <a href="password-reset.php">Restablecer contraseña</a>
                             </div>
                         </div>
+
                         <input type="hidden" name="enviar" class="form-control" value="si">
                         <button type="submit" class="btn btn-rounded">Iniciar sesión</button>
                     </form>

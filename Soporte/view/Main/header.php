@@ -83,20 +83,30 @@
                             </div>
                         </div>
 
+                        <input type="hidden" id="e_idx" value="<?php echo $_SESSION["e_id"] ?>"> <!-- ID del empleado -->
+
+                        <!-- User options -->
+                        <div class="dropdown dropdown-typical">
+                            <a href="#" class="dropdown-toggle no-arr">
+                                <span class="font-icon font-icon-user"></span>
+                                <span class="lblcontactonomx"><?php echo $_SESSION["e_name"] ?> <?php echo $_SESSION["e_last"] ?></span>
+                            </a>
+                        </div>
+
                         <!-- Help Menu -->
-                        <!--.<div class="help-dropdown">
+                        <div class="help-dropdown">
                             <button type="button">
                                 <i class="font-icon font-icon-help"></i>
                             </button>
                             <div class="help-dropdown-popup">
                                 <div class="help-dropdown-popup-side">
                                     <ul>
-                                        <li><a href="#">Getting Started</a></li>
-                                        <li><a href="#" class="active">Creating a new project</a></li>
-                                        <li><a href="#">Adding customers</a></li>
-                                        <li><a href="#">Settings</a></li>
-                                        <li><a href="#">Importing data</a></li>
-                                        <li><a href="#">Exporting data</a></li>
+                                        <li><a href="#">Desde el inicio</a></li>
+                                        <li><a href="#" class="active">Crear un nuevo ticket</a></li>
+                                        <li><a href="#">Añadir usuarios</a></li>
+                                        <li><a href="#">Configuraciones</a></li>
+                                        <li><a href="#">Importar datos</a></li>
+                                        <li><a href="#">Exportar datos</a></li>
                                     </ul>
                                 </div>
                                 <div class="help-dropdown-popup-cont">
@@ -154,7 +164,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> help-dropdown-->
+                        </div> <!-- help-dropdown -->
 
                     </div><!--.site-header-collapsed-in-->
                 </div><!--.site-header-collapsed-->

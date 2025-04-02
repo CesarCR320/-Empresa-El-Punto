@@ -17,9 +17,22 @@
         <!-- Contenido de la página -->
         <div class="page-content">
             <div class="container-fluid">
-                Blank page.
+                <header class="section-header">
+                    <div class="tbl">
+                        <div class="tbl-row">
+                            <div class="tbl-cell">
+                                <h3>Nuevo Ticket</h3>
+                                <ol class="breadcrumb breadcrumb-simple">
+                                    <li><a href="../Home">Inicio</a></li>
+                                    <li><a href="#">Soporte</a></li>
+                                    <li class="active">Nuevo Ticket</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </header>
             </div><!--.container-fluid-->
-        </div><!--.page-content-->
+        </div><!--Contenido de la página-->
         <?php   require_once '../Main/js.php'; ?>
         <script type="text/javascript" src="new-ticket.js"></script>
     </body>
