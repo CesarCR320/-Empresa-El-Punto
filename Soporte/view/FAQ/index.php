@@ -4,7 +4,7 @@
 ?>
 
 <?php   require_once '../Main/head.php'; ?>
-        <title>Soporte :: Consultar Ticket</title>
+        <title>Soporte :: FAQ</title>
     </head>
     <body class="with-side-menu">
 
@@ -17,24 +17,23 @@
         <!-- Contenido de la página -->
         <div class="page-content">
             <div class="container-fluid">
-                <header class="section-header">
-                    <div class="tbl">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <h3>Consultar Ticket</h3>
-                                <ol class="breadcrumb breadcrumb-simple">
-                                    <li><a href="../../Home">Inicio</a></li>
-                                    <li><a href="#">Soporte</a></li>
-                                    <li class="active">Consultar Ticket</li>
-                                </ol>
-                            </div>
+            <header class="section-header">
+                <div class="tbl">
+                    <div class="tbl-row">
+                        <div class="tbl-cell">
+                            <h3>FAQ</h3>
+                            <ol class="breadcrumb breadcrumb-simple">
+                                <li><a href="../Home">Inicio</a></li>
+                                <li><a href="#">Soporte</a></li>
+                                <li class="active">FAQ</li>
+                            </ol>
                         </div>
                     </div>
-                </header>
+                </div>
             </div><!--.container-fluid-->
         </div><!--.page-content-->
         <?php   require_once '../Main/js.php'; ?>
-        <script type="text/javascript" src="consult-ticket.js"></script>
+        <script type="text/javascript" src="home.js"></script>
     </body>
 </html>
 <?php

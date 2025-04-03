@@ -31,15 +31,16 @@
             </a>
         </li>
 
-        <!-- Menu de Perfil -->
+        <!-- Menu de Empleados -->
         <li class="blue with-sub">
             <span>
                 <i class="font-icon font-icon-user"></i>
-                <span class="lbl">Perfil</span>
+                <span class="lbl">Empleados</span>
             </span>
             <ul>
-                <li><a href="#"><span class="lbl">Opción 1</span></a></li>
-                <li><a href="#"><span class="lbl">Opción 2</span></a></li>
+                <li><a href="#"><span class="lbl">Consultar Empleados</span></a></li>
+                <li><a href="#"><span class="lbl">Nuevo Empleado</span></a></li>
+                <li><a href="#"><span class="lbl">Modificar Empleados</span></a></li>
             </ul>
         </li>
 
@@ -50,11 +51,10 @@
                 <span class="lbl">Soporte</span>
             </span>
             <ul>
-                <li><a href="../NuevoTicket/"><span class="lbl">Nuevo Ticket</span></a></li>
-                <li><a href="../ConsultarTicket/"><span class="lbl">Consultar Ticket</span></a></li>
-                <li><a href="documentation.html"><span class="lbl">Documentación</span></a></li>
-                <li><a href="faq.html"><span class="lbl">FAQ Simple</span></a></li>
-                <li><a href="faq-search.html"><span class="lbl">FAQ Búsqueda</span></a></li>
+                <li><a href="../NuevoTicket"><span class="lbl">Nuevo Ticket</span></a></li>
+                <li><a href="../ConsultarTicket"><span class="lbl">Consultar Ticket</span></a></li>
+                <li><a href="../Documentacion"><span class="lbl">Documentación</span></a></li>
+                <li><a href="../FAQ"><span class="lbl">FAQ</span></a></li>
             </ul>
         </li>
 
