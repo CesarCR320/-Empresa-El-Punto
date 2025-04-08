@@ -2,7 +2,7 @@
 $servidor = "localhost";  
 $usuario = "root";       
 $contraseña = "";           
-$nombredb = "empresa_el_punto"; 
+$nombredb = "elpunto"; 
 
 // Crear conexión
 $conexion = new mysqli($servidor, $usuario, $contraseña, $nombredb);
