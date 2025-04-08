@@ -6,7 +6,7 @@ require_once 'Conexion.php';
 $servername = "localhost";
 $username = "root";
 $password = "root";
-$dbname = "elPunto";
+$dbname = "elpunto";
 
 // Crear instancia de conexión
 $conexion = new Conexion($servername, $username, $password, $dbname);
