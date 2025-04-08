@@ -5,7 +5,7 @@ echo "";
 $servidor = "localhost";
 $usuario = "root";
 $password = "";
-$base_datos = "inventario";
+$base_datos = "elpunto";
 
 
 $conn = new mysqli($servidor, $usuario, $password, $base_datos);
