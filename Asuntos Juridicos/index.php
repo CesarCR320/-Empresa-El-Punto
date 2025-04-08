@@ -1,14 +1,14 @@
 <?php
 include 'conexion.php'; // Incluye la conexión a la base de datos
 
-// Consulta para traer los datos de la tabla mensajes
-$sql = "SELECT id, nombre, email, mensaje, fecha FROM mensajes";
+// Consulta para traer los datos de la tabla solicitudes_asesoria
+$sql = "SELECT id, nombre, email, telefono, tipo_consulta, mensaje, archivo, fecha FROM solicitudes_asesoria";
 $resultado = $conexion->query($sql);
 
-// Lógica para eliminar un mensaje
+// Lógica para eliminar una solicitud
 if (isset($_GET['eliminar'])) {
     $id = intval($_GET['eliminar']);
-    $stmt = $conexion->prepare("DELETE FROM mensajes WHERE id = ?");
+    $stmt = $conexion->prepare("DELETE FROM solicitudes_asesoria WHERE id = ?");
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {
         // Refrescar la página después de eliminar
@@ -20,22 +20,59 @@ if (isset($_GET['eliminar'])) {
     $stmt->close();
 }
 
-// Lógica para editar un mensaje
+// Lógica para editar una solicitud
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
     $id = intval($_POST['editar_id']);
     $name = htmlspecialchars($_POST['editar_name']);
     $email = htmlspecialchars($_POST['editar_email']);
+    $telefono = htmlspecialchars($_POST['editar_telefono']);
+    $tipo_consulta = htmlspecialchars($_POST['editar_tipo_consulta']);
     $message = htmlspecialchars($_POST['editar_message']);
 
     // Actualizar en la base de datos usando consulta preparada
-    $stmt = $conexion->prepare("UPDATE mensajes SET nombre = ?, email = ?, mensaje = ? WHERE id = ?");
-    $stmt->bind_param("sssi", $name, $email, $message, $id);
+    $stmt = $conexion->prepare("UPDATE solicitudes_asesoria SET nombre = ?, email = ?, telefono = ?, tipo_consulta = ?, mensaje = ? WHERE id = ?");
+    $stmt->bind_param("sssssi", $name, $email, $telefono, $tipo_consulta, $message, $id);
     if ($stmt->execute()) {
         // Refrescar la consulta después de actualizar
-        $resultado = $conexion->query("SELECT id, nombre, email, mensaje, fecha FROM mensajes");
-        echo "<p style='color: green;'>Mensaje actualizado correctamente.</p>";
+        $resultado = $conexion->query("SELECT id, nombre, email, telefono, tipo_consulta, mensaje, archivo, fecha FROM solicitudes_asesoria");
+        echo "<p style='color: green;'>Solicitud actualizada correctamente.</p>";
     } else {
         echo "<p style='color: red;'>Error al actualizar: " . $conexion->error . "</p>";
+    }
+    $stmt->close();
+}
+
+// Lógica para manejar el formulario de solicitud de asesoría
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['editar_id'])) {
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $telefono = htmlspecialchars($_POST['telefono']);
+    $tipo_consulta = htmlspecialchars($_POST['tipo_consulta']);
+    $message = htmlspecialchars($_POST['message']);
+    $archivo = null;
+
+    // Manejo del archivo subido
+    if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] == UPLOAD_ERR_OK) {
+        $upload_dir = 'uploads/'; // Directorio donde se guardarán los archivos
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true); // Crear el directorio si no existe
+        }
+        $archivo = $upload_dir . basename($_FILES['archivo']['name']);
+        if (!move_uploaded_file($_FILES['archivo']['tmp_name'], $archivo)) {
+            $archivo = null;
+            echo "<p style='color: red;'>Error al subir el archivo.</p>";
+        }
+    }
+
+    // Insertar en la base de datos usando consulta preparada
+    $stmt = $conexion->prepare("INSERT INTO solicitudes_asesoria (nombre, email, telefono, tipo_consulta, mensaje, archivo) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $name, $email, $telefono, $tipo_consulta, $message, $archivo);
+    if ($stmt->execute()) {
+        echo "<p style='color: green;'>Solicitud de asesoría enviada correctamente.</p>";
+        // Refrescar la consulta después de insertar
+        $resultado = $conexion->query("SELECT id, nombre, email, telefono, tipo_consulta, mensaje, archivo, fecha FROM solicitudes_asesoria");
+    } else {
+        echo "<p style='color: red;'>Error al enviar la solicitud: " . $conexion->error . "</p>";
     }
     $stmt->close();
 }
@@ -54,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             font-family: Arial, sans-serif;
         }
         body {
-            background-image: url('Fondo_Legal.jpg'); /* Cambiar a un fondo relacionado con temas legales */
+            background-image: url('Fondo_Legal.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -62,13 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             min-height: 100vh;
         }
         header {
-            background-color: rgba(33, 150, 243, 0.6); /* Fondo semitransparente en azul oscuro */
+            background-color: rgba(33, 150, 243, 0.6);
             color: white;
             text-align: center;
             padding: 1rem;
         }
         nav {
-            background-color: rgba(66, 165, 245, 0.6); /* Fondo semitransparente en azul claro */
+            background-color: rgba(66, 165, 245, 0.6);
             padding: 1rem;
         }
         nav ul {
@@ -103,31 +140,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             padding: 1.5rem;
         }
         .section h2 {
-            color: #1565c0; /* Azul oscuro para los títulos */
+            color: #1565c0;
             margin-bottom: 1rem;
         }
-        .contact-form {
-            max-width: 500px;
+        .legal-form {
+            max-width: 600px;
             margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
-        .contact-form label {
+        .legal-form label {
             display: block;
             margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
         }
-        .contact-form input, .contact-form textarea {
+        .legal-form input,
+        .legal-form select,
+        .legal-form textarea {
             width: 100%;
-            padding: 0.5rem;
+            padding: 0.75rem;
             margin-bottom: 1rem;
-            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            font-size: 1rem;
         }
-        .contact-form button {
-            background-color: #2196f3; /* Botón en azul */
+        .legal-form textarea {
+            resize: vertical;
+        }
+        .legal-form button {
+            background-color: #2196f3;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 1rem;
         }
-        .contact-form button:hover {
+        .legal-form button:hover {
             background-color: #1976d2;
         }
         .data-table {
@@ -142,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             border: 1px solid #ddd;
         }
         .data-table th {
-            background-color: rgba(66, 165, 245, 0.8); /* Fondo semitransparente en azul claro */
+            background-color: rgba(66, 165, 245, 0.8);
             color: white;
         }
         .data-table tr:nth-child(even) {
@@ -178,7 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             background-color: #f57c00;
         }
         footer {
-            background-color: rgba(33, 150, 243, 0.6); /* Fondo semitransparente en azul oscuro */
+            background-color: rgba(33, 150, 243, 0.6);
             color: white;
             text-align: center;
             padding: 1rem;
@@ -258,7 +311,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
         <ul>
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#contacto">Solicitud de Asesoría</a></li>
             <li><a href="#acerca-de">Acerca de</a></li>
         </ul>
     </nav>
@@ -280,118 +333,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
         </div>
 
         <div class="section" id="contacto">
-            <h2>Contacto</h2>
-            <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['editar_id'])) {
-                // Obtener y sanitizar los datos del formulario
-                $name = htmlspecialchars($_POST['name']);
-                $email = htmlspecialchars($_POST['email']);
-                $message = htmlspecialchars($_POST['message']);
-
-                // Insertar en la base de datos usando consulta preparada
-                $stmt = $conexion->prepare("INSERT INTO mensajes (nombre, email, mensaje) VALUES (?, ?, ?)");
-                $stmt->bind_param("sss", $name, $email, $message);
-                if ($stmt->execute()) {
-                    echo "<p style='color: green;'>Mensaje guardado correctamente.</p>";
-                    // Refrescar la consulta después de insertar
-                    $resultado = $conexion->query("SELECT id, nombre, email, mensaje, fecha FROM mensajes");
-                } else {
-                    echo "<p style='color: red;'>Error al guardar: " . $conexion->error . "</p>";
-                }
-                $stmt->close();
-            }
-            ?>
-            <div class="contact-form">
-                <form id="contactForm" method="POST" action="">
-                    <label for="name">Nombre:</label>
+            <h2>Solicitud de Asesoría Legal</h2>
+            <div class="legal-form">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    <label for="name">Nombre Completo:</label>
                     <input type="text" id="name" name="name" required>
 
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
 
-                    <label for="message">Consulta Legal:</label>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+
+                    <label for="tipo_consulta">Tipo de Consulta:</label>
+                    <select id="tipo_consulta" name="tipo_consulta" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="Laboral">Laboral</option>
+                        <option value="Contractual">Contractual</option>
+                        <option value="Penal">Penal</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+
+                    <label for="message">Descripción de la Consulta:</label>
                     <textarea id="message" name="message" rows="5" required placeholder="Describa su consulta o solicitud legal..."></textarea>
 
-                    <button type="button" onclick="showModal()">Enviar</button>
+                    <label for="archivo">Adjuntar Documento (opcional):</label>
+                    <input type="file" id="archivo" name="archivo" accept=".pdf,.doc,.docx">
+
+                    <button type="submit">Enviar Solicitud</button>
                 </form>
             </div>
 
-            <!-- Modal para confirmar envío -->
-            <div id="confirmModal" class="modal">
-                <div class="modal-content">
-                    <p>¿Estás seguro de que deseas enviar los datos?</p>
-                    <button class="confirm-btn" onclick="submitForm()">Sí, enviar</button>
-                    <button class="cancel-btn" onclick="closeModal()">Cancelar</button>
-                </div>
-            </div>
-
-            <!-- Modal para confirmar eliminación -->
-            <div id="deleteModal" class="modal">
-                <div class="modal-content">
-                    <p>¿Estás seguro de que deseas eliminar este mensaje?</p>
-                    <button class="confirm-btn" id="confirmDeleteBtn">Sí, eliminar</button>
-                    <button class="cancel-btn" onclick="closeDeleteModal()">Cancelar</button>
-                </div>
-            </div>
-
-            <!-- Modal para ver detalles -->
-            <div id="viewModal" class="modal">
-                <div class="modal-content">
-                    <h3>Detalles del Mensaje</h3>
-                    <p><strong>ID:</strong> <span id="viewId"></span></p>
-                    <p><strong>Nombre:</strong> <span id="viewNombre"></span></p>
-                    <p><strong>Email:</strong> <span id="viewEmail"></span></p>
-                    <p><strong>Mensaje:</strong> <span id="viewMensaje"></span></p>
-                    <p><strong>Fecha:</strong> <span id="viewFecha"></span></p>
-                    <button class="close-btn" onclick="closeViewModal()">Cerrar</button>
-                </div>
-            </div>
-
-            <!-- Modal para editar -->
-            <div id="editModal" class="modal">
-                <div class="modal-content">
-                    <h3>Editar Mensaje</h3>
-                    <form id="editForm" method="POST" action="">
-                        <input type="hidden" id="editar_id" name="editar_id">
-                        <label for="editar_name">Nombre:</label>
-                        <input type="text" id="editar_name" name="editar_name" required>
-
-                        <label for="editar_email">Email:</label>
-                        <input type="email" id="editar_email" name="editar_email" required>
-
-                        <label for="editar_message">Mensaje:</label>
-                        <textarea id="editar_message" name="editar_message" rows="5" required></textarea>
-
-                        <button type="button" class="confirm-btn" onclick="submitEditForm()">Guardar Cambios</button>
-                        <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancelar</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Tabla para mostrar los datos -->
-            <h3>Consultas Recibidas</h3>
+            <!-- Tabla para mostrar las solicitudes -->
+            <h3>Solicitudes Recibidas</h3>
             <?php
             if ($resultado && $resultado->num_rows > 0) {
                 echo "<table class='data-table'>";
-                echo "<thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Mensaje</th><th>Fecha</th><th>Acciones</th></tr></thead>";
+                echo "<thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Tipo de Consulta</th><th>Mensaje</th><th>Archivo</th><th>Fecha</th><th>Acciones</th></tr></thead>";
                 echo "<tbody>";
                 while ($row = $resultado->fetch_assoc()) {
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($row['id']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['telefono']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['tipo_consulta']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['mensaje']) . "</td>";
+                    echo "<td>";
+                    if ($row['archivo']) {
+                        echo "<a href='" . htmlspecialchars($row['archivo']) . "' target='_blank'>Ver archivo</a>";
+                    } else {
+                        echo "N/A";
+                    }
+                    echo "</td>";
                     echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
                     echo "<td>";
-                    echo "<button class='action-btn edit-btn' onclick=\"showEditModal(" . $row['id'] . ", '" . htmlspecialchars($row['nombre'], ENT_QUOTES) . "', '" . htmlspecialchars($row['email'], ENT_QUOTES) . "', '" . htmlspecialchars($row['mensaje'], ENT_QUOTES) . "')\">Editar</button>";
+                    echo "<button class='action-btn edit-btn' onclick=\"showEditModal(" . $row['id'] . ", '" . htmlspecialchars($row['nombre'], ENT_QUOTES) . "', '" . htmlspecialchars($row['email'], ENT_QUOTES) . "', '" . htmlspecialchars($row['telefono'], ENT_QUOTES) . "', '" . htmlspecialchars($row['tipo_consulta'], ENT_QUOTES) . "', '" . htmlspecialchars($row['mensaje'], ENT_QUOTES) . "')\">Editar</button>";
                     echo "<button class='action-btn delete-btn' onclick=\"showDeleteModal(" . $row['id'] . ")\">Eliminar</button>";
-                    echo "<button class='action-btn view-btn' onclick=\"showViewModal(" . $row['id'] . ", '" . htmlspecialchars($row['nombre'], ENT_QUOTES) . "', '" . htmlspecialchars($row['email'], ENT_QUOTES) . "', '" . htmlspecialchars($row['mensaje'], ENT_QUOTES) . "', '" . htmlspecialchars($row['fecha'], ENT_QUOTES) . "')\">Ver</button>";
+                    echo "<button class='action-btn view-btn' onclick=\"showViewModal(" . $row['id'] . ", '" . htmlspecialchars($row['nombre'], ENT_QUOTES) . "', '" . htmlspecialchars($row['email'], ENT_QUOTES) . "', '" . htmlspecialchars($row['telefono'], ENT_QUOTES) . "', '" . htmlspecialchars($row['tipo_consulta'], ENT_QUOTES) . "', '" . htmlspecialchars($row['mensaje'], ENT_QUOTES) . "', '" . htmlspecialchars($row['archivo'], ENT_QUOTES) . "', '" . htmlspecialchars($row['fecha'], ENT_QUOTES) . "')\">Ver</button>";
                     echo "</td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";
             } else {
-                echo "<p>No hay consultas registradas.</p>";
+                echo "<p>No hay solicitudes registradas.</p>";
             }
             ?>
         </div>
@@ -402,24 +408,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
         </div>
     </div>
 
+    <!-- Modal para confirmar eliminación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>¿Estás seguro de que deseas eliminar esta solicitud?</p>
+            <button class="confirm-btn" id="confirmDeleteBtn">Sí, eliminar</button>
+            <button class="cancel-btn" onclick="closeDeleteModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalles -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <h3>Detalles de la Solicitud</h3>
+            <p><strong>ID:</strong> <span id="viewId"></span></p>
+            <p><strong>Nombre:</strong> <span id="viewNombre"></span></p>
+            <p><strong>Email:</strong> <span id="viewEmail"></span></p>
+            <p><strong>Teléfono:</strong> <span id="viewTelefono"></span></p>
+            <p><strong>Tipo de Consulta:</strong> <span id="viewTipoConsulta"></span></p>
+            <p><strong>Mensaje:</strong> <span id="viewMensaje"></span></p>
+            <p><strong>Archivo:</strong> <span id="viewArchivo"></span></p>
+            <p><strong>Fecha:</strong> <span id="viewFecha"></span></p>
+            <button class="close-btn" onclick="closeViewModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Modal para editar -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>Editar Solicitud</h3>
+            <form id="editForm" method="POST" action="">
+                <input type="hidden" id="editar_id" name="editar_id">
+                <label for="editar_name">Nombre:</label>
+                <input type="text" id="editar_name" name="editar_name" required>
+
+                <label for="editar_email">Email:</label>
+                <input type="email" id="editar_email" name="editar_email" required>
+
+                <label for="editar_telefono">Teléfono:</label>
+                <input type="tel" id="editar_telefono" name="editar_telefono" required>
+
+                <label for="editar_tipo_consulta">Tipo de Consulta:</label>
+                <select id="editar_tipo_consulta" name="editar_tipo_consulta" required>
+                    <option value="Laboral">Laboral</option>
+                    <option value="Contractual">Contractual</option>
+                    <option value="Penal">Penal</option>
+                    <option value="Civil">Civil</option>
+                    <option value="Otros">Otros</option>
+                </select>
+
+                <label for="editar_message">Mensaje:</label>
+                <textarea id="editar_message" name="editar_message" rows="5" required></textarea>
+
+                <button type="button" class="confirm-btn" onclick="submitEditForm()">Guardar Cambios</button>
+                <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
     <footer>
         <p>© 2025 Departamento de Legal y Asuntos Jurídicos. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // Funciones para manejar el modal de envío
-        function showModal() {
-            document.getElementById('confirmModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('confirmModal').style.display = 'none';
-        }
-
-        function submitForm() {
-            document.getElementById('contactForm').submit();
-        }
-
         // Funciones para manejar el modal de eliminación
         function showDeleteModal(id) {
             document.getElementById('deleteModal').style.display = 'flex';
@@ -433,11 +484,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
         }
 
         // Funciones para manejar el modal de visualización
-        function showViewModal(id, nombre, email, mensaje, fecha) {
+        function showViewModal(id, nombre, email, telefono, tipo_consulta, mensaje, archivo, fecha) {
             document.getElementById('viewId').textContent = id;
             document.getElementById('viewNombre').textContent = nombre;
             document.getElementById('viewEmail').textContent = email;
+            document.getElementById('viewTelefono').textContent = telefono;
+            document.getElementById('viewTipoConsulta').textContent = tipo_consulta;
             document.getElementById('viewMensaje').textContent = mensaje;
+            document.getElementById('viewArchivo').innerHTML = archivo ? `<a href="${archivo}" target="_blank">Ver archivo</a>` : 'N/A';
             document.getElementById('viewFecha').textContent = fecha;
             document.getElementById('viewModal').style.display = 'flex';
         }
@@ -447,10 +501,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
         }
 
         // Funciones para manejar el modal de edición
-        function showEditModal(id, nombre, email, mensaje) {
+        function showEditModal(id, nombre, email, telefono, tipo_consulta, mensaje) {
             document.getElementById('editar_id').value = id;
             document.getElementById('editar_name').value = nombre;
             document.getElementById('editar_email').value = email;
+            document.getElementById('editar_telefono').value = telefono;
+            document.getElementById('editar_tipo_consulta').value = tipo_consulta;
             document.getElementById('editar_message').value = mensaje;
             document.getElementById('editModal').style.display = 'flex';
         }
@@ -465,13 +521,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
 
         // Cerrar los modales si se hace clic fuera de ellos
         window.onclick = function(event) {
-            var confirmModal = document.getElementById('confirmModal');
             var deleteModal = document.getElementById('deleteModal');
             var viewModal = document.getElementById('viewModal');
             var editModal = document.getElementById('editModal');
-            if (event.target == confirmModal) {
-                confirmModal.style.display = 'none';
-            }
             if (event.target == deleteModal) {
                 deleteModal.style.display = 'none';
             }
