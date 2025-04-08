@@ -28,7 +28,7 @@ class managercompras {
     public function obtenerCompras() {
         $query = "SELECT c.*, p.nombre as nombre_proveedor 
                  FROM compras c 
-                 JOIN proveedores p ON c.proveedor_id = p.id 
+                 JOIN proveedores_compras p ON c.proveedor_id = p.id 
                  ORDER BY c.fecha_compra DESC";
         
         $resultado = $this->conexion->query($query);
@@ -98,7 +98,7 @@ class managercompras {
     
     // Obtener todos los proveedores para el formulario
     public function obtenerProveedores() {
-        $query = "SELECT id, nombre FROM proveedores ORDER BY nombre";
+        $query = "SELECT id, nombre FROM proveedores_compras ORDER BY nombre";
         
         $resultado = $this->conexion->query($query);
         $proveedores = [];
