@@ -84,6 +84,50 @@ include_once 'conexion.php';
         button:hover {
             background-color: #218838;
         }
+
+       
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            width: 300px;
+        }
+
+        .close {
+            cursor: pointer;
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+            float: right;
+        }
+
+        .modal-content label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -109,9 +153,9 @@ include_once 'conexion.php';
                 echo "<td>" . $row["contacto"] . "</td>";
                 echo "<td>" . $row["telefono"] . "</td>";
                 echo "<td>
-                        <a href='editar_proveedor.php?id=" . $row["id"] . "' class='btn btn-editar'>Editar</a>
-                        <a href='ver_proveedor.php?id=" . $row["id"] . "' class='btn btn-ver'>Ver</a>
-                        <a href='eliminar_proveedor.php?id=" . $row["id"] . "' class='btn btn-eliminar' onclick='return confirm(\"¿Seguro que deseas eliminar este proveedor?\");'>Eliminar</a>
+                        <button class='btn btn-editar' onclick='openEditModal(" . $row["id"] . ", \"" . $row["nombre"] . "\", \"" . $row["contacto"] . "\", \"" . $row["telefono"] . "\")'>Editar</button>
+                        <button class='btn btn-ver' onclick='openViewModal(\"" . $row["id"] . "\", \"" . $row["nombre"] . "\", \"" . $row["contacto"] . "\", \"" . $row["telefono"] . "\")'>Ver</button>
+                        <button class='btn btn-eliminar' onclick='openDeleteModal(" . $row["id"] . ")'>Eliminar</button>
                       </td>";
                 echo "</tr>";
             }
@@ -124,5 +168,64 @@ include_once 'conexion.php';
     </table>
 
     <button onclick="location.href='index.php'">Volver al Menú</button>
+    <button onclick="location.href='agregar_proveedor.php'" style="background-color: #007BFF;">Agregar</button>
+
+    
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeViewModal()">&times;</span>
+            <h2>Detalles del Proveedor</h2>
+            <p><strong>Nombre:</strong> <span id="viewNombre"></span></p>
+            <p><strong>Contacto:</strong> <span id="viewContacto"></span></p>
+            <p><strong>Teléfono:</strong> <span id="viewTelefono"></span></p>
+        </div>
+    </div>
+
+    
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
+            <h2>¿Seguro que quieres eliminar este proveedor?</h2>
+            <form action="eliminar_proveedor.php" method="POST">
+                <input type="hidden" name="id" id="deleteId">
+                <button type="submit" style="background-color: #dc3545;">Eliminar</button>
+                <button type="button" onclick="closeDeleteModal()" style="background-color: gray;">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Editar Proveedor</h2>
+            <form action="editar_proveedor.php" method="POST">
+                <input type="hidden" name="id" id="editId">
+                <label>Nombre:</label>
+                <input type="text" name="nombre" id="editNombre">
+                <label>Contacto:</label>
+                <input type="text" name="contacto" id="editContacto">
+                <label>Teléfono:</label>
+                <input type="text" name="telefono" id="editTelefono">
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openViewModal(id, nombre, contacto, telefono) {
+            document.getElementById('viewNombre').innerText = nombre;
+            document.getElementById('viewContacto').innerText = contacto;
+            document.getElementById('viewTelefono').innerText = telefono;
+            document.getElementById('viewModal').style.display = 'flex';
+        }
+
+        function closeViewModal() { document.getElementById('viewModal').style.display = 'none'; }
+        function openDeleteModal(id) { document.getElementById('deleteId').value = id; document.getElementById('deleteModal').style.display = 'flex'; }
+        function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
+        function openEditModal(id, nombre, contacto, telefono) { document.getElementById('editId').value = id; document.getElementById('editNombre').value = nombre; document.getElementById('editContacto').value = contacto; document.getElementById('editTelefono').value = telefono; document.getElementById('editModal').style.display = 'flex'; }
+        function closeEditModal() { document.getElementById('editModal').style.display = 'none'; }
+    </script>
+
 </body>
 </html>

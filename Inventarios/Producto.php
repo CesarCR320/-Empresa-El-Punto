@@ -1,5 +1,5 @@
 <?php
-    class Administrador{
+    class Producto{
         //Atributos
         private $id;
         private $nombre;
