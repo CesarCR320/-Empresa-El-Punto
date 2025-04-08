@@ -4,7 +4,7 @@ function conectarDB() {
     $servidor = "localhost";
     $usuario = "root";
     $password = "";
-    $baseDatos = "compras";
+    $baseDatos = "elpunto";
     
     // Crear conexión
     $conexion = new mysqli($servidor, $usuario, $password, $baseDatos);
