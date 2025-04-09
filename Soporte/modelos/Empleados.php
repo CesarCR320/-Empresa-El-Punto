@@ -30,7 +30,7 @@
                     $_SESSION["e_last"] = $resultado["e_last"];
 
                     # Redireccionar a la página de inicio
-                    header("Location:" . Conectar::ruta() . "view/Home/");
+                    header("Location:" . Conectar::ruta() . "Home/");
                     exit();
                 } else {
                     # Mensaje de error

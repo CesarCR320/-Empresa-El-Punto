@@ -34,7 +34,7 @@
             </div><!--.container-fluid-->
         </div><!--Contenido de la página-->
         <?php   require_once '../../view/Main/js.php'; ?>
-        <script type="text/javascript" src="home.js"></script>
+        <script type="text/javascript" src="faq.js"></script>
     </body>
 </html>
 <?php
