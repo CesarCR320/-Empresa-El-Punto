@@ -3,13 +3,15 @@ require_once 'conexion_r.php';
 
 // Procesar formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    $nombre = $conn->real_escape_string($_POST['nombre']);
-    $descripcion = $conn->real_escape_string($_POST['descripcion']);
+    $id = intval($_POST['id']);
+    $nombre = $conn->real_escape_string($_POST['nombre'] ?? '');
+    $descripcion = $conn->real_escape_string($_POST['descripcion'] ?? '');
 
-    $sql = "UPDATE roles SET nombre = '$nombre', descripcion = '$descripcion' WHERE id = $id";
+    $sql = "UPDATE roles SET nombre = ?, descripcion = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $nombre, $descripcion, $id);
     
-    if ($conn->query($sql)) {
+    if ($stmt->execute()) {
         header("Location: index.php?mensaje=Rol+actualizado+correctamente");
         exit();
     } else {
@@ -47,16 +49,19 @@ $conn->close();
             
             <div class="form-group">
                 <label for="nombre">Nombre del Rol:</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($rol['nombre']); ?>" required>
+                <input type="text" id="nombre" name="nombre" 
+                       value="<?php echo htmlspecialchars($rol['nombre']); ?>" required>
             </div>
             
             <div class="form-group">
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4"><?php echo htmlspecialchars($rol['descripcion']); ?></textarea>
+                <textarea id="descripcion" name="descripcion" rows="4"><?php 
+                    echo htmlspecialchars($rol['descripcion']); 
+                ?></textarea>
             </div>
             
-            <button type="submit">Guardar Cambios</button>
-            <a href="index.php" class="btn">Cancelar</a>
+            <button type="submit" class="btn">Guardar Cambios</button>
+            <a href="index.php" class="btn cancelar">Cancelar</a>
         </form>
     </div>
 </body>

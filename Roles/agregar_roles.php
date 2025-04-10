@@ -1,58 +1,64 @@
 <?php
-include_once 'conexion_r.php';
+require_once 'conexion_r.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
+$error = '';
 
-    $sql = "INSERT INTO roles (nombre) VALUES (?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $nombre);
-
-    if ($stmt->execute()) {
-        header("Location: ver_roles.php");
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nombre = trim($conn->real_escape_string($_POST['nombre'] ?? ''));
+    $descripcion = trim($conn->real_escape_string($_POST['descripcion'] ?? ''));
+    
+    if (empty($nombre)) {
+        $error = "El nombre del rol es obligatorio";
     } else {
-        echo "Error al agregar el rol";
+        $sql = "INSERT INTO roles (nombre, descripcion) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $nombre, $descripcion);
+        
+        if ($stmt->execute()) {
+            header("Location: index.php?mensaje=Rol+agregado+correctamente");
+            exit();
+        } else {
+            $error = "Error al agregar el rol: " . $conn->error;
+        }
+        $stmt->close();
     }
-    $stmt->close();
-    $conn->close();
-    exit();
 }
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Rol</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        form {
-            width: 300px;
-            margin: 0 auto;
-        }
-        input, button {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+    <title>Agregar Nuevo Rol</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Agregar Rol</h1>
-    <form method="POST">
-        <label>Nombre del Rol:</label>
-        <input type="text" name="nombre" required>
-        <button type="submit">Guardar</button>
-    </form>
+    <?php include 'header.php'; ?>
+    <div class="container">
+        <h1>Agregar Nuevo Rol</h1>
+        
+        <?php if ($error): ?>
+            <div class="error"><?php echo $error; ?></div>
+        <?php endif; ?>
+        
+        <form method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre del Rol:*</label>
+                <input type="text" id="nombre" name="nombre" required
+                       value="<?php echo htmlspecialchars($_POST['nombre'] ?? ''); ?>">
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4"><?php 
+                    echo htmlspecialchars($_POST['descripcion'] ?? ''); 
+                ?></textarea>
+            </div>
+            
+            <button type="submit" class="btn">Guardar Rol</button>
+            <a href="index.php" class="btn cancelar">Cancelar</a>
+        </form>
+    </div>
 </body>
 </html>
