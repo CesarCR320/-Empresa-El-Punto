@@ -1,63 +1,50 @@
-<?php
-require_once 'conexion_r.php';
-
-// Mostrar mensaje si existe
-$mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
-?>
-
 <!DOCTYPE html>
 <html lang="es">
-<link rel="stylesheet" href="style.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Roles</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Menú Roles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .menu-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        button {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 10px auto;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Gestión de Roles</h1>
-        
-        <?php if ($mensaje): ?>
-            <div class="mensaje"><?php echo htmlspecialchars($mensaje); ?></div>
-        <?php endif; ?>
-        
-        <a href="agregar_roles.php" class="btn">Agregar Nuevo Rol</a>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre del Rol</th>
-                    <th>Descripción</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT id, nombre, descripcion FROM roles";
-                $result = $conn->query($sql);
-                
-                if ($result->num_rows > 0) {
-                    while($rol = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($rol['id']) . "</td>";
-                        echo "<td>" . htmlspecialchars($rol['nombre']) . "</td>";
-                        echo "<td>" . htmlspecialchars($rol['descripcion']) . "</td>";
-                        echo "<td class='actions'>";
-                        echo "<a href='editar_roles.php?id=" . $rol['id'] . "' class='edit'>Editar</a>";
-                        echo "<a href='eliminar_roles.php?id=" . $rol['id'] . "' class='delete'>Eliminar</a>";
-                        echo "<a href='permisos_roles.php?id=" . $rol['id'] . "'>Permisos</a>";
-                        echo "</td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='4'>No hay roles registrados</td></tr>";
-                }
-                $conn->close();
-                ?>
-            </tbody>
-        </table>
+    <h1>Menú Roles</h1>
+    <div class="menu-container">
+        <div class="menu-buttons">
+            <button onclick="location.href='ver_roles.php'">Ver Roles</button>
+            <button onclick="location.href='agregar_rol.php'">Agregar Rol</button>
+        </div>
     </div>
 </body>
 </html>

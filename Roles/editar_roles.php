@@ -1,19 +1,33 @@
 <?php
-include 'conexion_r.php';
+require_once 'conexion_r.php';
 
-$id = isset($_GET['id']) ? $_GET['id'] : die('ID de rol no especificado');
+// Procesar formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST['id'];
+    $nombre = $conn->real_escape_string($_POST['nombre']);
+    $descripcion = $conn->real_escape_string($_POST['descripcion']);
 
-try {
-    $stmt = $conn->prepare("SELECT id, nombre, descripcion FROM roles WHERE id = ?");
-    $stmt->execute([$id]);
-    $rol = $stmt->fetch(PDO::FETCH_ASSOC);
+    $sql = "UPDATE roles SET nombre = '$nombre', descripcion = '$descripcion' WHERE id = $id";
     
-    if (!$rol) {
-        die('Rol no encontrado');
+    if ($conn->query($sql)) {
+        header("Location: index.php?mensaje=Rol+actualizado+correctamente");
+        exit();
+    } else {
+        die("Error al actualizar: " . $conn->error);
     }
-} catch(PDOException $e) {
-    die("Error al obtener el rol: " . $e->getMessage());
 }
+
+// Obtener datos del rol
+$id = isset($_GET['id']) ? intval($_GET['id']) : die('ID de rol no especificado');
+$sql = "SELECT id, nombre, descripcion FROM roles WHERE id = $id";
+$result = $conn->query($sql);
+
+if ($result->num_rows == 0) {
+    die('Rol no encontrado');
+}
+
+$rol = $result->fetch_assoc();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -24,10 +38,11 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <?php include 'header.php'; ?>
     <div class="container">
         <h1>Editar Rol</h1>
         
-        <form action="procesar_editar.php" method="post">
+        <form method="post">
             <input type="hidden" name="id" value="<?php echo $rol['id']; ?>">
             
             <div class="form-group">
@@ -41,7 +56,7 @@ try {
             </div>
             
             <button type="submit">Guardar Cambios</button>
-            <a href="index.html" class="btn">Cancelar</a>
+            <a href="index.php" class="btn">Cancelar</a>
         </form>
     </div>
 </body>
