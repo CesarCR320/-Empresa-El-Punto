@@ -1,11 +1,8 @@
 <?php
 require_once 'conexion_r.php';
-require_once 'header.php';
+require_once 'header.php'; // Incluye los estilos
 
-$query = "SELECT id, nombre, descripcion, 
-          DATE_FORMAT(created_at, '%d/%m/%Y %H:%i') as fecha_creacion,
-          DATE_FORMAT(updated_at, '%d/%m/%Y %H:%i') as fecha_actualizacion
-          FROM roles";
+$query = "SELECT id, nombre, descripcion FROM roles";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
@@ -15,7 +12,7 @@ if ($result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($rol['nombre']) . "</td>";
         echo "<td>" . htmlspecialchars($rol['descripcion']) . "</td>";
         echo "<td>" . htmlspecialchars($rol['fecha_creacion']) . "</td>";
-        echo "<td>" . htmlspecialchars($rol['fecha_actualizacion']) . "</td>";
+        echo "<td>" . htmlspecailchars($rol['fecha_actualizacion']) . "</td>";
         echo "<td class='actions'>";
         echo "<a href='editar_roles.php?id=" . $rol['id'] . "' class='edit'>Editar</a>";
         echo "<a href='eliminar_roles.php?id=" . $rol['id'] . "' class='delete'>Eliminar</a>";
@@ -24,7 +21,7 @@ if ($result->num_rows > 0) {
         echo "</tr>";
     }
 } else {
-    echo "<tr><td colspan='6'>No se encontraron roles</td></tr>";
+    echo "<tr><td colspan='4'>No se encontraron roles</td></tr>";
 }
 $conn->close();
 ?>
