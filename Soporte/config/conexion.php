@@ -7,7 +7,7 @@
         # Conexión a la base de datos
         protected function Conexion() {
             try {
-                $conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=helpdesk", "root", "");
+                $conectar = $this->dbh = new PDO("mysql:local=localhost;dbname=helpdesk", "root", "Password123");
                 return $conectar;
             } catch (Exception $e) {
                 print "¡Error Fatal!: La cagaste y esta madre no jala, culpa al primer pendejo que se atraviese " . $e->getMessage() . "<br/>";

@@ -3,7 +3,7 @@
 
         <!-- Principal -->
         <li class="grey with-sub">
-            <a href="../Home/">
+            <a href="/-Empresa-El-Punto/Soporte/Home">
                 <i class="font-icon glyphicon glyphicon-send"></i>
                 <span class="lbl">Principal</span>
             </a>
@@ -51,10 +51,10 @@
                 <span class="lbl">Soporte</span>
             </span>
             <ul>
-                <li><a href="../NuevoTicket"><span class="lbl">Nuevo Ticket</span></a></li>
-                <li><a href="../ConsultarTicket"><span class="lbl">Consultar Ticket</span></a></li>
-                <li><a href="../Documentacion"><span class="lbl">Documentación</span></a></li>
-                <li><a href="../FAQ"><span class="lbl">FAQ</span></a></li>
+                <li><a href="/-Empresa-El-Punto/Soporte/Soporte/NuevoTicket"><span class="lbl">Nuevo Ticket</span></a></li>
+                <li><a href="/-Empresa-El-Punto/Soporte/Soporte/ConsultarTicket"><span class="lbl">Consultar Ticket</span></a></li>
+                <li><a href="/-Empresa-El-Punto/Soporte/Soporte/Documentacion"><span class="lbl">Documentación</span></a></li>
+                <li><a href="/-Empresa-El-Punto/Soporte/Soporte/FAQ"><span class="lbl">FAQ</span></a></li>
             </ul>
         </li>
 
