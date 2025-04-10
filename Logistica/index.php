@@ -62,13 +62,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la página */
         }
         header {
-            background-color: rgba(46, 125, 50, 0.6); /* Reducimos la opacidad para mayor transparencia */
+            background-color: rgba(46, 125, 50, 0.6); /* Fondo semitransparente */
             color: white;
             text-align: center;
             padding: 1rem;
         }
         nav {
-            background-color: rgba(76, 175, 80, 0.6); /* Reducimos la opacidad para mayor transparencia */
+            background-color: rgba(76, 175, 80, 0.6); /* Fondo semitransparente */
             padding: 1rem;
         }
         nav ul {
@@ -89,13 +89,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
-            background-color: rgba(255, 255, 255, 0.7); /* Reducimos la opacidad para mayor transparencia */
+            background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente para el contenido principal */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .section {
             margin-bottom: 2rem;
             padding: 1rem;
+        }
+        #inicio {
+            background-color: rgba(255, 255, 255, 0.95); /* Fondo más opaco para la sección "Bienvenido" */
+            border-radius: 5px;
+            padding: 1.5rem;
         }
         .section h2 {
             color: #2e7d32;
@@ -129,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             width: 100%;
             border-collapse: collapse;
             margin-top: 2rem;
-            background-color: rgba(255, 255, 255, 0.8); /* Reducimos la opacidad para mayor transparencia */
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
         }
         .data-table th, .data-table td {
             padding: 0.75rem;
@@ -137,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             border: 1px solid #ddd;
         }
         .data-table th {
-            background-color: rgba(76, 175, 80, 0.8); /* Fondo semitransparente para los encabezados de la tabla */
+            background-color: rgba(76, 175, 80, 0.8); /* Fondo semitransparente para los encabezados */
             color: white;
         }
         .data-table tr:nth-child(even) {
@@ -173,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             background-color: #f57c00;
         }
         footer {
-            background-color: rgba(46, 125, 50, 0.6); /* Reducimos la opacidad para mayor transparencia */
+            background-color: rgba(46, 125, 50, 0.6); /* Fondo semitransparente */
             color: white;
             text-align: center;
             padding: 1rem;

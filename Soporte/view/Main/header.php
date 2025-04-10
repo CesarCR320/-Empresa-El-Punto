@@ -2,8 +2,8 @@
     <div class="container-fluid">
 
         <a href="#" class="site-logo">
-            <img class="hidden-md-down" src="../../public/img/logo-black.png" alt="">
-            <img class="hidden-lg-up" src="../../public/img/logo-black-mob.png" alt="">
+            <img class="hidden-md-down" src="/-Empresa-El-Punto/Soporte/public/img/logo-black.png" alt="">
+            <img class="hidden-lg-up" src="/-Empresa-El-Punto/Soporte/public/img/logo-black-mob.png" alt="">
         </a>
 
         <button id="show-hide-sidebar-toggle" class="show-hide-sidebar">
@@ -20,14 +20,14 @@
                     <!-- User menu -->
                     <div class="dropdown user-menu">
                         <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="../../public/img/avatar-2-64.png" alt="">
+                            <img src="/-Empresa-El-Punto/Soporte/public/img/avatar-2-64.png" alt="">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
                             <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Perfil</a>
                             <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Ajustes</a>
                             <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Ayuda</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="../Main/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Cerrar sesión</a>
+                            <a class="dropdown-item" href="/-Empresa-El-Punto/Soporte/view/Main/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Cerrar sesión</a>
                         </div>
                     </div>
 
@@ -83,20 +83,30 @@
                             </div>
                         </div>
 
+                        <input type="hidden" id="e_idx" value="<?php echo $_SESSION["e_id"] ?>"> <!-- ID del empleado -->
+
+                        <!-- User options -->
+                        <div class="dropdown dropdown-typical">
+                            <a href="#" class="dropdown-toggle no-arr">
+                                <span class="font-icon font-icon-user"></span>
+                                <span class="lblcontactonomx"><?php echo $_SESSION["e_name"] ?> <?php echo $_SESSION["e_last"] ?></span>
+                            </a>
+                        </div>
+
                         <!-- Help Menu -->
-                        <!--.<div class="help-dropdown">
+                        <div class="help-dropdown">
                             <button type="button">
                                 <i class="font-icon font-icon-help"></i>
                             </button>
                             <div class="help-dropdown-popup">
                                 <div class="help-dropdown-popup-side">
                                     <ul>
-                                        <li><a href="#">Getting Started</a></li>
-                                        <li><a href="#" class="active">Creating a new project</a></li>
-                                        <li><a href="#">Adding customers</a></li>
-                                        <li><a href="#">Settings</a></li>
-                                        <li><a href="#">Importing data</a></li>
-                                        <li><a href="#">Exporting data</a></li>
+                                        <li><a href="#">Desde el inicio</a></li>
+                                        <li><a href="#" class="active">Crear un nuevo ticket</a></li>
+                                        <li><a href="#">Añadir usuarios</a></li>
+                                        <li><a href="#">Configuraciones</a></li>
+                                        <li><a href="#">Importar datos</a></li>
+                                        <li><a href="#">Exportar datos</a></li>
                                     </ul>
                                 </div>
                                 <div class="help-dropdown-popup-cont">
@@ -154,7 +164,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> help-dropdown-->
+                        </div> <!-- help-dropdown -->
 
                     </div><!--.site-header-collapsed-in-->
                 </div><!--.site-header-collapsed-->

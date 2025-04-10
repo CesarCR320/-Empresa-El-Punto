@@ -1,12 +1,9 @@
 <?php
-// Incluir la conexión a la base de datos
-include "conexion.php"; // Se asume que este archivo define $conexion
+include "conexion.php"; 
 
-// Verificar si se recibió un ID válido
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
 
-    // Obtener los datos actuales del cliente
     $sql = "SELECT * FROM clientes WHERE id = $id";
     $resultado = $conexion->query($sql);
 
@@ -21,7 +18,6 @@ if (isset($_GET["id"])) {
     exit();
 }
 
-// Si se envía el formulario, actualizar los datos del cliente
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"];
     $direccion = $_POST["direccion"];
@@ -29,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefono = $_POST["telefono"];
     $correo = $_POST["correo"];
 
-    // Consulta SQL para actualizar el cliente
     $sql = "UPDATE clientes SET 
             Nombre='$nombre', 
             Direccion='$direccion', 
@@ -39,14 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE id=$id";
 
     if ($conexion->query($sql) === TRUE) {
-        header("Location: ver_clientes.php"); // Redirigir a la lista de clientes
+        header("Location: ver_clientes.php"); 
         exit();
     } else {
         echo "Error al actualizar cliente: " . $conexion->error;
     }
 }
 
-// Cerrar la conexión
 $conexion->close();
 ?>
 
