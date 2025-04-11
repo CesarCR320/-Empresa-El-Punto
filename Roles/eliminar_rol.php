@@ -4,13 +4,18 @@ function eliminarRol() {
     
     $id = intval($_POST['id'] ?? 0);
     
+    // Primero eliminamos los permisos asociados
+    $conn->query("DELETE FROM rol_permisos WHERE rol_id = $id");
+    
+    // Luego eliminamos el rol
     $sql = "DELETE FROM roles WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     
     if ($stmt->execute()) {
-        $_SESSION['message'] = "Rol eliminado correctamente";
+        return ['success' => 'Rol eliminado correctamente'];
     } else {
-        $_SESSION['message'] = "Error al eliminar el rol: " . $conn->error;
+        return ['error' => 'Error al eliminar el rol: ' . $conn->error];
     }
 }
+?>
