@@ -1,50 +1,88 @@
+<?php
+require_once 'conexion_r.php';
+session_start();
+
+// Procesar acciones POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require_once procesarAccion($_POST['action'] ?? '');
+}
+
+function procesarAccion($action) {
+    switch ($action) {
+        case 'agregar':
+            require_once 'agregar_rol.php';
+            return agregarRol();
+        case 'editar':
+            require_once 'editar_rol.php';
+            return editarRol();
+        case 'eliminar':
+            require_once 'eliminar_rol.php';
+            return eliminarRol();
+        default:
+            return ['error' => 'Acción no válida'];
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú Roles</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        .menu-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-        }
-        button {
-            display: block;
-            width: 200px;
-            padding: 10px;
-            margin: 10px auto;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Gestor de Roles</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Menú Roles</h1>
-    <div class="menu-container">
-        <div class="menu-buttons">
-            <button onclick="location.href='ver_roles.php'">Ver Roles</button>
-            <button onclick="location.href='agregar_rol.php'">Agregar Rol</button>
+    <div class="container">
+        <h1>Gestor de Roles</h1>
+        
+        <nav class="menu">
+            <button onclick="cargarContenido('ver_roles.php')">Ver Roles</button>
+            <button onclick="cargarContenido('agregar_rol.php')">Agregar Rol</button>
+        </nav>
+        
+        <div id="contenido-dinamico">
+            <!-- Aquí se carga el contenido -->
+            <?php include 'ver_roles.php'; ?>
         </div>
     </div>
+
+    <script>
+    function cargarContenido(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('contenido-dinamico').innerHTML = html;
+                // Reasignar eventos después de cargar nuevo contenido
+                asignarEventos();
+            });
+    }
+    
+    function asignarEventos() {
+        // Asignar eventos a los elementos dinámicos
+        document.querySelectorAll('.editar-btn').forEach(btn => {
+            btn.onclick = () => cargarContenido(`editar_rol.php?id=${btn.dataset.id}`);
+        });
+        
+        document.querySelectorAll('.eliminar-btn').forEach(btn => {
+            btn.onclick = () => confirmarEliminacion(btn.dataset.id);
+        });
+    }
+    
+    function confirmarEliminacion(id) {
+        if (confirm('¿Estás seguro de eliminar este rol?')) {
+            const formData = new FormData();
+            formData.append('action', 'eliminar');
+            formData.append('id', id);
+            
+            fetch('index.php', {
+                method: 'POST',
+                body: formData
+            }).then(() => cargarContenido('ver_roles.php'));
+        }
+    }
+    
+    // Asignar eventos iniciales
+    document.addEventListener('DOMContentLoaded', asignarEventos);
+    </script>
 </body>
 </html>
