@@ -7,7 +7,8 @@ function editarRol() {
     $descripcion = trim($conn->real_escape_string($_POST['descripcion'] ?? ''));
     
     if (empty($nombre)) {
-        return ['error' => 'El nombre del rol es obligatorio'];
+        $_SESSION['message'] = "Error: El nombre del rol es obligatorio";
+        return;
     }
     
     $sql = "UPDATE roles SET nombre = ?, descripcion = ? WHERE id = ?";
@@ -15,9 +16,9 @@ function editarRol() {
     $stmt->bind_param("ssi", $nombre, $descripcion, $id);
     
     if ($stmt->execute()) {
-        return ['success' => 'Rol actualizado correctamente'];
+        $_SESSION['message'] = "Rol actualizado correctamente";
     } else {
-        return ['error' => 'Error al actualizar el rol: ' . $conn->error];
+        $_SESSION['message'] = "Error al actualizar el rol: " . $conn->error;
     }
 }
 
@@ -25,7 +26,7 @@ $id = intval($_GET['id'] ?? 0);
 $rol = $conn->query("SELECT * FROM roles WHERE id = $id")->fetch_assoc();
 
 if (!$rol) {
-    die('Rol no encontrado');
+    die("Rol no encontrado");
 }
 ?>
 
@@ -37,17 +38,14 @@ if (!$rol) {
     
     <div class="form-group">
         <label for="nombre">Nombre del Rol:*</label>
-        <input type="text" id="nombre" name="nombre" 
-               value="<?= htmlspecialchars($rol['nombre']) ?>" required>
+        <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($rol['nombre']) ?>" required>
     </div>
     
     <div class="form-group">
         <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" rows="4"><?= 
-            htmlspecialchars($rol['descripcion']) 
-        ?></textarea>
+        <textarea id="descripcion" name="descripcion" rows="4"><?= htmlspecialchars($rol['descripcion']) ?></textarea>
     </div>
     
     <button type="submit" class="btn">Guardar Cambios</button>
-    <button type="button" class="btn cancelar" onclick="cargarContenido('ver_roles.php')">Cancelar</button>
+    <button type="button" class="btn cancel" onclick="loadContent('ver_roles.php')">Cancelar</button>
 </form>

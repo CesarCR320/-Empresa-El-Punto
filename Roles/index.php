@@ -5,36 +5,30 @@ session_start();
 // Procesar acciones POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'] ?? '';
-    $response = [];
     
     switch ($action) {
         case 'agregar':
             require_once 'agregar_rol.php';
-            $response = agregarRol();
+            agregarRol();
             break;
         case 'editar':
             require_once 'editar_rol.php';
-            $response = editarRol();
+            editarRol();
             break;
         case 'eliminar':
             require_once 'eliminar_rol.php';
-            $response = eliminarRol();
+            eliminarRol();
             break;
     }
     
-    if (!empty($response)) {
-        $_SESSION['message'] = $response;
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true]);
-        exit();
-    }
+    // Redirigir para evitar reenvío del formulario
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
 }
 
-// Mostrar mensajes almacenados en sesión
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    unset($_SESSION['message']);
-}
+// Mostrar mensajes
+$message = $_SESSION['message'] ?? '';
+unset($_SESSION['message']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,92 +42,81 @@ if (isset($_SESSION['message'])) {
     <div class="container">
         <h1>Gestor de Roles</h1>
         
-        <?php if (!empty($message)): ?>
-            <div class="alert <?= isset($message['error']) ? 'error' : 'success' ?>">
-                <?= $message['error'] ?? $message['success'] ?>
+        <?php if ($message): ?>
+            <div class="alert <?= strpos($message, 'Error') !== false ? 'error' : 'success' ?>">
+                <?= $message ?>
             </div>
         <?php endif; ?>
         
         <nav class="menu">
-            <button onclick="cargarContenido('ver_roles.php')">Ver Roles</button>
-            <button onclick="cargarContenido('agregar_rol.php')">Agregar Rol</button>
+            <button onclick="loadContent('ver_roles.php')">Ver Roles</button>
+            <button onclick="loadContent('agregar_rol.php')">Agregar Rol</button>
         </nav>
         
-        <div id="contenido-dinamico">
+        <div id="content-container">
             <?php include 'ver_roles.php'; ?>
         </div>
     </div>
 
     <script>
-    async function cargarContenido(url) {
-        try {
-            const response = await fetch(url);
-            const html = await response.text();
-            document.getElementById('contenido-dinamico').innerHTML = html;
-            asignarEventos();
-        } catch (error) {
-            console.error('Error:', error);
-        }
+    function loadContent(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('content-container').innerHTML = html;
+                // Reasignar eventos después de cargar nuevo contenido
+                assignEvents();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('content-container').innerHTML = '<div class="error">Error al cargar el contenido</div>';
+            });
     }
     
-    function asignarEventos() {
-        // Asignar eventos a formularios dinámicos
+    function assignEvents() {
+        // Asignar eventos a formularios
         document.querySelectorAll('form').forEach(form => {
-            form.onsubmit = async (e) => {
+            form.onsubmit = function(e) {
                 e.preventDefault();
-                const formData = new FormData(form);
-                
-                try {
-                    const response = await fetch('index.php', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    if (result.success) {
-                        cargarContenido('ver_roles.php');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
+                submitForm(this);
             };
         });
         
         // Asignar eventos a botones de editar
-        document.querySelectorAll('.editar-btn').forEach(btn => {
-            btn.onclick = () => cargarContenido(`editar_rol.php?id=${btn.dataset.id}`);
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.onclick = function() {
+                loadContent('editar_rol.php?id=' + this.dataset.id);
+            };
         });
         
         // Asignar eventos a botones de eliminar
-        document.querySelectorAll('.eliminar-btn').forEach(btn => {
-            btn.onclick = () => confirmarEliminacion(btn.dataset.id);
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.onclick = function() {
+                if (confirm('¿Estás seguro de eliminar este rol?')) {
+                    const formData = new FormData();
+                    formData.append('action', 'eliminar');
+                    formData.append('id', this.dataset.id);
+                    
+                    fetch('index.php', {
+                        method: 'POST',
+                        body: formData
+                    }).then(() => loadContent('ver_roles.php'));
+                }
+            };
         });
     }
     
-    async function confirmarEliminacion(id) {
-        if (confirm('¿Estás seguro de eliminar este rol?')) {
-            const formData = new FormData();
-            formData.append('action', 'eliminar');
-            formData.append('id', id);
-            
-            try {
-                const response = await fetch('index.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                if (result.success) {
-                    cargarContenido('ver_roles.php');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
+    function submitForm(form) {
+        const formData = new FormData(form);
+        
+        fetch('index.php', {
+            method: 'POST',
+            body: formData
+        }).then(() => loadContent('ver_roles.php'));
     }
     
     // Inicializar eventos al cargar la página
-    document.addEventListener('DOMContentLoaded', asignarEventos);
+    document.addEventListener('DOMContentLoaded', assignEvents);
     </script>
 </body>
 </html>

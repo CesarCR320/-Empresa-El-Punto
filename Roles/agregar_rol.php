@@ -6,7 +6,8 @@ function agregarRol() {
     $descripcion = trim($conn->real_escape_string($_POST['descripcion'] ?? ''));
     
     if (empty($nombre)) {
-        return ['error' => 'El nombre del rol es obligatorio'];
+        $_SESSION['message'] = "Error: El nombre del rol es obligatorio";
+        return;
     }
     
     $sql = "INSERT INTO roles (nombre, descripcion) VALUES (?, ?)";
@@ -14,9 +15,9 @@ function agregarRol() {
     $stmt->bind_param("ss", $nombre, $descripcion);
     
     if ($stmt->execute()) {
-        return ['success' => 'Rol agregado correctamente'];
+        $_SESSION['message'] = "Rol agregado correctamente";
     } else {
-        return ['error' => 'Error al agregar el rol: ' . $conn->error];
+        $_SESSION['message'] = "Error al agregar el rol: " . $conn->error;
     }
 }
 ?>
@@ -37,5 +38,5 @@ function agregarRol() {
     </div>
     
     <button type="submit" class="btn">Guardar Rol</button>
-    <button type="button" class="btn cancelar" onclick="cargarContenido('ver_roles.php')">Cancelar</button>
+    <button type="button" class="btn cancel" onclick="loadContent('ver_roles.php')">Cancelar</button>
 </form>
