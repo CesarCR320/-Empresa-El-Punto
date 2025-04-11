@@ -129,3 +129,29 @@ tr:nth-child(even) {
 .btn.cancel:hover {
     background-color: #7f8c8d;
 }
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #666;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.error button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-top: 10px;
+    cursor: pointer;
+}

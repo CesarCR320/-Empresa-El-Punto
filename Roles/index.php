@@ -49,7 +49,7 @@ unset($_SESSION['message']);
         <?php endif; ?>
         
         <nav class="menu">
-            <button onclick="loadContent('ver_roles.php')">Ver Roles</button>
+            <button onclick="loadContent('ver_roles.php')" id="ver-roles-btn">Ver Roles</button>
             <button onclick="loadContent('agregar_rol.php')">Agregar Rol</button>
         </nav>
         
@@ -57,6 +57,51 @@ unset($_SESSION['message']);
             <?php include 'ver_roles.php'; ?>
         </div>
     </div>
+
+            <script>
+        function loadContent(url) {
+            // Mostrar indicador de carga
+            document.getElementById('content-container').innerHTML = '<div class="loading">Cargando...</div>';
+            
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar el contenido');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('content-container').innerHTML = html;
+                    assignEvents(); // Reasignar eventos a los elementos cargados
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('content-container').innerHTML = `
+                        <div class="error">
+                            Error al cargar el contenido. 
+                            <button onclick="loadContent('ver_roles.php')">Reintentar</button>
+                        </div>`;
+                });
+        }
+
+        // Función para asignar eventos
+        function assignEvents() {
+            // Asignar evento al botón "Ver Roles" por si se recarga
+            const verRolesBtn = document.getElementById('ver-roles-btn');
+            if (verRolesBtn) {
+                verRolesBtn.onclick = function() {
+                    loadContent('ver_roles.php');
+                };
+            }
+            
+            // Otros eventos...
+        }
+
+        // Asignar eventos cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            assignEvents();
+        });
+        </script>
 
     <script>
     function loadContent(url) {
