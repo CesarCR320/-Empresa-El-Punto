@@ -1,11 +1,23 @@
 <?php
-$servidor = "localhost";
-$usuario = "root";
-$password = "";
-$base_datos = "elpunto";
+class Conexion {
+    private $servername = "localhost";
+    private $username = "root";
+    private $password = "";
+    private $dbname = "elpunto";
+    private $conn;
 
-$conexion = new mysqli($servidor, $usuario, $password, $base_datos);
-if ($conexion->connect_error) {
-    die("No estoy conectado, revisa: " . $conexion->connect_error);
+    public function conectar() {
+        try {
+            $this->conn = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $this->conn;
+        } catch (PDOException $e) {
+            die("No estoy conectado, revisa: " . $e->getMessage());
+        }
+    }
+
+    public function desconectar() {
+        $this->conn = null;
+    }
 }
 ?>

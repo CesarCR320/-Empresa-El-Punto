@@ -1,23 +1,22 @@
 <?php
 include 'conexion.php'; // Incluye la conexión a la base de datos
+include 'Producto.php'; // Incluye la clase Recurso
+
+// Crear conexión para el formulario de contacto (usando PDO)
+$conexion = new Conexion();
+$pdo = $conexion->conectar();
 
 // Consulta para traer los datos de la tabla mensajes
 $sql = "SELECT id, nombre, email, mensaje, fecha FROM mensajes";
-$resultado = $conexion->query($sql);
+$resultado = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 // Lógica para eliminar un mensaje
-if (isset($_GET['eliminar'])) {
-    $id = intval($_GET['eliminar']);
-    $stmt = $conexion->prepare("DELETE FROM mensajes WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    if ($stmt->execute()) {
-        // Refrescar la página después de eliminar
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "<p style='color: red;'>Error al eliminar: " . $conexion->error . "</p>";
-    }
-    $stmt->close();
+if (isset($_GET['eliminar_mensaje'])) {
+    $id = intval($_GET['eliminar_mensaje']);
+    $stmt = $pdo->prepare("DELETE FROM mensajes WHERE id = ?");
+    $stmt->execute([$id]);
+    header("Location: index.php#contacto");
+    exit();
 }
 
 // Lógica para editar un mensaje
@@ -27,25 +26,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
     $email = htmlspecialchars($_POST['editar_email']);
     $message = htmlspecialchars($_POST['editar_message']);
 
-    // Actualizar en la base de datos usando consulta preparada
-    $stmt = $conexion->prepare("UPDATE mensajes SET nombre = ?, email = ?, mensaje = ? WHERE id = ?");
-    $stmt->bind_param("sssi", $name, $email, $message, $id);
-    if ($stmt->execute()) {
-        // Refrescar la consulta después de actualizar
-        $resultado = $conexion->query("SELECT id, nombre, email, mensaje, fecha FROM mensajes");
-        echo "<p style='color: green;'>Mensaje actualizado correctamente.</p>";
-    } else {
-        echo "<p style='color: red;'>Error al actualizar: " . $conexion->error . "</p>";
-    }
-    $stmt->close();
+    $stmt = $pdo->prepare("UPDATE mensajes SET nombre = ?, email = ?, mensaje = ? WHERE id = ?");
+    $stmt->execute([$name, $email, $message, $id]);
+    header("Location: index.php#contacto");
+    exit();
 }
+
+// Lógica para el Módulo de Logística
+// Procesar eliminación de un recurso
+if (isset($_GET['eliminar_recurso']) && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $stmt = $pdo->prepare("DELETE FROM recursos WHERE id = ?");
+    $stmt->execute([$id]);
+    header("Location: index.php#modulo-logistica");
+    exit();
+}
+
+// Procesar agregar/editar un recurso
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['recurso_action'])) {
+    $nombre = htmlspecialchars($_POST['nombre']);
+    $tipo = htmlspecialchars($_POST['tipo']);
+    $descripcion = htmlspecialchars($_POST['descripcion']);
+    $id = isset($_POST['id']) ? $_POST['id'] : null;
+
+    if ($id) {
+        // Editar recurso
+        $stmt = $pdo->prepare("UPDATE recursos SET nombre = ?, tipo = ?, descripcion = ? WHERE id = ?");
+        $stmt->execute([$nombre, $tipo, $descripcion, $id]);
+    } else {
+        // Agregar nuevo recurso
+        $stmt = $pdo->prepare("INSERT INTO recursos (nombre, tipo, descripcion) VALUES (?, ?, ?)");
+        $stmt->execute([$nombre, $tipo, $descripcion]);
+    }
+    header("Location: index.php#modulo-logistica");
+    exit();
+}
+
+// Obtener todos los recursos
+$stmt = $pdo->query("SELECT * FROM recursos");
+$recursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DPTO. Logística</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -58,17 +86,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* Para que el fondo no se desplace al hacer scroll */
-            min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la página */
+            background-attachment: fixed;
+            min-height: 100vh;
         }
         header {
-            background-color: rgba(46, 125, 50, 0.6); /* Fondo semitransparente */
+            background-color: rgba(46, 125, 50, 0.6);
             color: white;
             text-align: center;
             padding: 1rem;
         }
         nav {
-            background-color: rgba(76, 175, 80, 0.6); /* Fondo semitransparente */
+            background-color: rgba(76, 175, 80, 0.6);
             padding: 1rem;
         }
         nav ul {
@@ -89,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
-            background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente para el contenido principal */
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -98,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             padding: 1rem;
         }
         #inicio {
-            background-color: rgba(255, 255, 255, 0.95); /* Fondo más opaco para la sección "Bienvenido" */
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 5px;
             padding: 1.5rem;
         }
@@ -118,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             width: 100%;
             padding: 0.5rem;
             margin-bottom: 1rem;
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para los campos de entrada */
+            background-color: rgba(255, 255, 255, 0.8);
         }
         .contact-form button {
             background-color: #4caf50;
@@ -134,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             width: 100%;
             border-collapse: collapse;
             margin-top: 2rem;
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+            background-color: rgba(255, 255, 255, 0.8);
         }
         .data-table th, .data-table td {
             padding: 0.75rem;
@@ -142,14 +170,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             border: 1px solid #ddd;
         }
         .data-table th {
-            background-color: rgba(76, 175, 80, 0.8); /* Fondo semitransparente para los encabezados */
+            background-color: rgba(76, 175, 80, 0.8);
             color: white;
         }
         .data-table tr:nth-child(even) {
-            background-color: rgba(249, 249, 249, 0.8); /* Fondo semitransparente para filas pares */
+            background-color: rgba(249, 249, 249, 0.8);
         }
         .data-table tr:hover {
-            background-color: rgba(241, 241, 241, 0.8); /* Fondo semitransparente al pasar el mouse */
+            background-color: rgba(241, 241, 241, 0.8);
         }
         .action-btn {
             padding: 5px 10px;
@@ -178,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             background-color: #f57c00;
         }
         footer {
-            background-color: rgba(46, 125, 50, 0.6); /* Fondo semitransparente */
+            background-color: rgba(46, 125, 50, 0.6);
             color: white;
             text-align: center;
             padding: 1rem;
@@ -200,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             align-items: center;
         }
         .modal-content {
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente para los modales */
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 5px;
             text-align: center;
@@ -245,7 +273,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             width: 100%;
             padding: 0.5rem;
             margin-bottom: 1rem;
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para los campos de entrada en modales */
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        /* Estilos para el Módulo de Logística */
+        #modulo-logistica .data-table th, #modulo-logistica .data-table td {
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -259,6 +291,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#modulo-logistica">Módulo de Logística</a></li>
             <li><a href="#acerca-de">Acerca de</a></li>
         </ul>
     </nav>
@@ -281,23 +314,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
         <div class="section" id="contacto">
             <h2>Contacto</h2>
             <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['editar_id'])) {
-                // Obtener y sanitizar los datos del formulario
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['editar_id']) && !isset($_POST['recurso_action'])) {
                 $name = htmlspecialchars($_POST['name']);
                 $email = htmlspecialchars($_POST['email']);
                 $message = htmlspecialchars($_POST['message']);
 
-                // Insertar en la base de datos usando consulta preparada
-                $stmt = $conexion->prepare("INSERT INTO mensajes (nombre, email, mensaje) VALUES (?, ?, ?)");
-                $stmt->bind_param("sss", $name, $email, $message);
-                if ($stmt->execute()) {
-                    echo "<p style='color: green;'>Mensaje guardado correctamente.</p>";
-                    // Refrescar la consulta después de insertar
-                    $resultado = $conexion->query("SELECT id, nombre, email, mensaje, fecha FROM mensajes");
-                } else {
-                    echo "<p style='color: red;'>Error al guardar: " . $conexion->error . "</p>";
-                }
-                $stmt->close();
+                $stmt = $pdo->prepare("INSERT INTO mensajes (nombre, email, mensaje) VALUES (?, ?, ?)");
+                $stmt->execute([$name, $email, $message]);
+                header("Location: index.php#contacto");
+                exit();
             }
             ?>
             <div class="contact-form">
@@ -324,7 +349,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
                 </div>
             </div>
 
-            <!-- Modal para confirmar eliminación -->
+            <!-- Modal para confirmar eliminación de mensaje -->
             <div id="deleteModal" class="modal">
                 <div class="modal-content">
                     <p>¿Estás seguro de que deseas eliminar este mensaje?</p>
@@ -333,7 +358,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
                 </div>
             </div>
 
-            <!-- Modal para ver detalles -->
+            <!-- Modal para ver detalles de mensaje -->
             <div id="viewModal" class="modal">
                 <div class="modal-content">
                     <h3>Detalles del Mensaje</h3>
@@ -346,7 +371,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
                 </div>
             </div>
 
-            <!-- Modal para editar -->
+            <!-- Modal para editar mensaje -->
             <div id="editModal" class="modal">
                 <div class="modal-content">
                     <h3>Editar Mensaje</h3>
@@ -367,14 +392,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
                 </div>
             </div>
 
-            <!-- Tabla para mostrar los datos -->
+            <!-- Tabla para mostrar los mensajes -->
             <h3>Mensajes Recibidos</h3>
             <?php
-            if ($resultado && $resultado->num_rows > 0) {
+            if (!empty($resultado)) {
                 echo "<table class='data-table'>";
                 echo "<thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Mensaje</th><th>Fecha</th><th>Acciones</th></tr></thead>";
                 echo "<tbody>";
-                while ($row = $resultado->fetch_assoc()) {
+                foreach ($resultado as $row) {
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($row['id']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
@@ -393,6 +418,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
                 echo "<p>No hay mensajes registrados.</p>";
             }
             ?>
+
+            <!-- Nueva sección: Módulo de Logística -->
+            <div class="section" id="modulo-logistica">
+                <h2>Módulo de Logística</h2>
+
+                <!-- Botón para agregar nuevo recurso -->
+                <div class="mb-3">
+                    <button type="button" class="btn btn-success" onclick="showAddRecursoModal()">
+                        AGREGAR NUEVO RECURSO
+                    </button>
+                </div>
+
+                <!-- Tabla de recursos -->
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($recursos as $recurso): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($recurso['id']); ?></td>
+                                <td><?php echo htmlspecialchars($recurso['nombre']); ?></td>
+                                <td><?php echo htmlspecialchars($recurso['tipo']); ?></td>
+                                <td><?php echo htmlspecialchars($recurso['descripcion']); ?></td>
+                                <td>
+                                    <button class="action-btn view-btn" onclick="showViewRecursoModal(<?php echo $recurso['id']; ?>, '<?php echo htmlspecialchars($recurso['nombre'], ENT_QUOTES); ?>', '<?php echo htmlspecialchars($recurso['tipo'], ENT_QUOTES); ?>', '<?php echo htmlspecialchars($recurso['descripcion'], ENT_QUOTES); ?>')">Ver</button>
+                                    <button class="action-btn edit-btn" onclick="showEditRecursoModal(<?php echo $recurso['id']; ?>, '<?php echo htmlspecialchars($recurso['nombre'], ENT_QUOTES); ?>', '<?php echo htmlspecialchars($recurso['tipo'], ENT_QUOTES); ?>', '<?php echo htmlspecialchars($recurso['descripcion'], ENT_QUOTES); ?>')">Editar</button>
+                                    <button class="action-btn delete-btn" onclick="showDeleteRecursoModal(<?php echo $recurso['id']; ?>)">Eliminar</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+
+                <!-- Modal para agregar recurso -->
+                <div id="addRecursoModal" class="modal">
+                    <div class="modal-content">
+                        <h3>Agregar Nuevo Recurso</h3>
+                        <form id="addRecursoForm" method="POST" action="">
+                            <input type="hidden" name="recurso_action" value="add">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" required>
+
+                            <label for="tipo">Tipo:</label>
+                            <input type="text" id="tipo" name="tipo" required>
+
+                            <label for="descripcion">Descripción:</label>
+                            <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
+
+                            <button type="button" class="confirm-btn" onclick="submitAddRecursoForm()">Agregar</button>
+                            <button type="button" class="cancel-btn" onclick="closeAddRecursoModal()">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal para ver recurso -->
+                <div id="viewRecursoModal" class="modal">
+                    <div class="modal-content">
+                        <h3>Modal Ver</h3>
+                        <p><strong>ID:</strong> <span id="viewRecursoId"></span></p>
+                        <p><strong>Nombre:</strong> <span id="viewRecursoNombre"></span></p>
+                        <p><strong>Tipo:</strong> <span id="viewRecursoTipo"></span></p>
+                        <p><strong>Descripción:</strong> <span id="viewRecursoDescripcion"></span></p>
+                        <button class="close-btn" onclick="closeViewRecursoModal()">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal para editar recurso -->
+                <div id="editRecursoModal" class="modal">
+                    <div class="modal-content">
+                        <h3>Modal Editar</h3>
+                        <form id="editRecursoForm" method="POST" action="">
+                            <input type="hidden" id="edit_recurso_id" name="id">
+                            <input type="hidden" name="recurso_action" value="edit">
+                            <label for="edit_recurso_nombre">Nombre:</label>
+                            <input type="text" id="edit_recurso_nombre" name="nombre" required>
+
+                            <label for="edit_recurso_tipo">Tipo:</label>
+                            <input type="text" id="edit_recurso_tipo" name="tipo" required>
+
+                            <label for="edit_recurso_descripcion">Descripción:</label>
+                            <textarea id="edit_recurso_descripcion" name="descripcion" rows="5" required></textarea>
+
+                            <button type="button" class="confirm-btn" onclick="submitEditRecursoForm()">Guardar Cambios</button>
+                            <button type="button" class="cancel-btn" onclick="closeEditRecursoModal()">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal para confirmar eliminación de recurso -->
+                <div id="deleteRecursoModal" class="modal">
+                    <div class="modal-content">
+                        <p>¿Estás seguro de que deseas eliminar este recurso?</p>
+                        <button class="confirm-btn" id="confirmDeleteRecursoBtn">Sí, eliminar</button>
+                        <button class="cancel-btn" onclick="closeDeleteRecursoModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="section" id="acerca-de">
@@ -406,7 +535,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
     </footer>
 
     <script>
-        // Funciones para manejar el modal de envío
+        // Funciones para manejar el modal de envío de mensajes
         function showModal() {
             document.getElementById('confirmModal').style.display = 'flex';
         }
@@ -419,11 +548,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             document.getElementById('contactForm').submit();
         }
 
-        // Funciones para manejar el modal de eliminación
+        // Funciones para manejar el modal de eliminación de mensajes
         function showDeleteModal(id) {
             document.getElementById('deleteModal').style.display = 'flex';
             document.getElementById('confirmDeleteBtn').onclick = function() {
-                window.location.href = 'index.php?eliminar=' + id;
+                window.location.href = 'index.php?eliminar_mensaje=' + id;
             };
         }
 
@@ -431,7 +560,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             document.getElementById('deleteModal').style.display = 'none';
         }
 
-        // Funciones para manejar el modal de visualización
+        // Funciones para manejar el modal de visualización de mensajes
         function showViewModal(id, nombre, email, mensaje, fecha) {
             document.getElementById('viewId').textContent = id;
             document.getElementById('viewNombre').textContent = nombre;
@@ -445,7 +574,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             document.getElementById('viewModal').style.display = 'none';
         }
 
-        // Funciones para manejar el modal de edición
+        // Funciones para manejar el modal de edición de mensajes
         function showEditModal(id, nombre, email, mensaje) {
             document.getElementById('editar_id').value = id;
             document.getElementById('editar_name').value = nombre;
@@ -462,12 +591,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             document.getElementById('editForm').submit();
         }
 
+        // Funciones para manejar el Módulo de Logística
+        // Modal para agregar recurso
+        function showAddRecursoModal() {
+            document.getElementById('addRecursoModal').style.display = 'flex';
+        }
+
+        function closeAddRecursoModal() {
+            document.getElementById('addRecursoModal').style.display = 'none';
+        }
+
+        function submitAddRecursoForm() {
+            document.getElementById('addRecursoForm').submit();
+        }
+
+        // Modal para ver recurso
+        function showViewRecursoModal(id, nombre, tipo, descripcion) {
+            document.getElementById('viewRecursoId').textContent = id;
+            document.getElementById('viewRecursoNombre').textContent = nombre;
+            document.getElementById('viewRecursoTipo').textContent = tipo;
+            document.getElementById('viewRecursoDescripcion').textContent = descripcion;
+            document.getElementById('viewRecursoModal').style.display = 'flex';
+        }
+
+        function closeViewRecursoModal() {
+            document.getElementById('viewRecursoModal').style.display = 'none';
+        }
+
+        // Modal para editar recurso
+        function showEditRecursoModal(id, nombre, tipo, descripcion) {
+            document.getElementById('edit_recurso_id').value = id;
+            document.getElementById('edit_recurso_nombre').value = nombre;
+            document.getElementById('edit_recurso_tipo').value = tipo;
+            document.getElementById('edit_recurso_descripcion').value = descripcion;
+            document.getElementById('editRecursoModal').style.display = 'flex';
+        }
+
+        function closeEditRecursoModal() {
+            document.getElementById('editRecursoModal').style.display = 'none';
+        }
+
+        function submitEditRecursoForm() {
+            document.getElementById('editRecursoForm').submit();
+        }
+
+        // Modal para eliminar recurso
+        function showDeleteRecursoModal(id) {
+            document.getElementById('deleteRecursoModal').style.display = 'flex';
+            document.getElementById('confirmDeleteRecursoBtn').onclick = function() {
+                window.location.href = 'index.php?eliminar_recurso&id=' + id;
+            };
+        }
+
+        function closeDeleteRecursoModal() {
+            document.getElementById('deleteRecursoModal').style.display = 'none';
+        }
+
         // Cerrar los modales si se hace clic fuera de ellos
         window.onclick = function(event) {
             var confirmModal = document.getElementById('confirmModal');
             var deleteModal = document.getElementById('deleteModal');
             var viewModal = document.getElementById('viewModal');
             var editModal = document.getElementById('editModal');
+            var addRecursoModal = document.getElementById('addRecursoModal');
+            var viewRecursoModal = document.getElementById('viewRecursoModal');
+            var editRecursoModal = document.getElementById('editRecursoModal');
+            var deleteRecursoModal = document.getElementById('deleteRecursoModal');
+
             if (event.target == confirmModal) {
                 confirmModal.style.display = 'none';
             }
@@ -480,10 +670,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar_id'])) {
             if (event.target == editModal) {
                 editModal.style.display = 'none';
             }
+            if (event.target == addRecursoModal) {
+                addRecursoModal.style.display = 'none';
+            }
+            if (event.target == viewRecursoModal) {
+                viewRecursoModal.style.display = 'none';
+            }
+            if (event.target == editRecursoModal) {
+                editRecursoModal.style.display = 'none';
+            }
+            if (event.target == deleteRecursoModal) {
+                deleteRecursoModal.style.display = 'none';
+            }
         }
     </script>
 </body>
 </html>
+
 <?php
-$conexion->close(); // Cierra la conexión al final
+// Desconectar
+$conexion->desconectar();
 ?>
