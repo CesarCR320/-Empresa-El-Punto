@@ -2,6 +2,15 @@
 require_once 'conexion_r.php';
 session_start();
 
+// Páginas válidas del sistema
+$paginasValidas = ['ver_roles.php', 'agregar_rol.php', 'editar_rol.php', 'permisos_roles.php'];
+
+// Determinar página a mostrar
+$pagina = 'ver_roles.php';
+if (isset($_GET['page']) && in_array(basename($_GET['page']), $paginasValidas)) {
+    $pagina = basename($_GET['page']);
+}
+
 // Procesar acciones POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'] ?? '';
@@ -46,47 +55,12 @@ if (isset($_SESSION['message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Roles</title>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Estilos adicionales para el layout principal */
-        .main-container {
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            color: #2c3e50;
-            margin: 0;
-            font-size: 28px;
-        }
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
-    </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="header">
-            <h1><i class="fas fa-users-cog"></i> Gestión de Roles y Permisos</h1>
-            <div class="header-actions">
-                <button class="btn primary" onclick="cargarContenido('ver_roles.php')">
-                    <i class="fas fa-list"></i> Ver Roles
-                </button>
-                <button class="btn success" onclick="cargarContenido('agregar_rol.php')">
-                    <i class="fas fa-plus"></i> Nuevo Rol
-                </button>
-            </div>
-        </div>
+    <div class="container">
+        <h1><i class="fas fa-users-cog"></i> Gestor de Roles</h1>
         
         <?php if (!empty($message)): ?>
             <div class="alert <?= isset($message['error']) ? 'error' : 'success' ?>">
@@ -95,13 +69,28 @@ if (isset($_SESSION['message'])) {
             </div>
         <?php endif; ?>
         
+        <nav class="menu">
+            <button class="btn primary" onclick="navegarA('ver_roles.php')">
+                <i class="fas fa-list"></i> Ver Roles
+            </button>
+            <button class="btn success" onclick="navegarA('agregar_rol.php')">
+                <i class="fas fa-plus"></i> Agregar Rol
+            </button>
+        </nav>
+        
         <div id="contenido-dinamico">
-            <?php include 'ver_roles.php'; ?>
+            <?php include $pagina; ?>
         </div>
     </div>
 
     <script>
-    // Función mejorada para cargar contenido dinámico
+    // Función para navegar manteniendo la URL limpia
+    function navegarA(pagina) {
+        history.pushState(null, null, pagina);
+        cargarContenido(pagina);
+    }
+
+    // Función para cargar contenido
     async function cargarContenido(url) {
         try {
             // Mostrar loader
@@ -112,48 +101,32 @@ if (isset($_SESSION['message'])) {
             `;
             
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Error en la respuesta');
-            
+            if (!response.ok) throw new Error('Error al cargar');
             const html = await response.text();
+            
             document.getElementById('contenido-dinamico').innerHTML = html;
-            
-            // Actualizar la URL en el navegador
-            history.pushState(null, null, url);
-            
             asignarEventos();
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById('contenido-dinamico').innerHTML = `
-                <div class="error">
-                    <i class="fas fa-exclamation-triangle"></i> Error al cargar el contenido: ${error.message}
-                </div>
-            `;
+            window.location.href = 'index.php';
         }
     }
-    
-    // Manejar el botón de retroceso del navegador
-    window.addEventListener('popstate', function() {
-        const url = window.location.pathname.split('/').pop() || 'ver_roles.php';
-        cargarContenido(url);
+
+    // Manejar el botón de retroceso
+    window.addEventListener('popstate', function(event) {
+        const pagina = window.location.pathname.split('/').pop() || 'ver_roles.php';
+        cargarContenido(pagina);
     });
-    
-    // Asignar eventos a elementos dinámicos
+
+    // Asignar eventos dinámicos
     function asignarEventos() {
-        // Manejo de formularios
+        // Botones de formularios
         document.querySelectorAll('form').forEach(form => {
             form.onsubmit = async (e) => {
                 e.preventDefault();
                 const formData = new FormData(form);
-                const submitBtn = form.querySelector('button[type="submit"]');
                 
                 try {
-                    // Mostrar estado de carga
-                    if (submitBtn) {
-                        const originalText = submitBtn.innerHTML;
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-                        submitBtn.disabled = true;
-                    }
-                    
                     const response = await fetch('index.php', {
                         method: 'POST',
                         body: formData
@@ -161,21 +134,17 @@ if (isset($_SESSION['message'])) {
                     
                     const result = await response.json();
                     if (result.success) {
-                        cargarContenido('ver_roles.php');
+                        navegarA('ver_roles.php');
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    if (submitBtn) {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    }
                 }
             };
         });
         
-        // Asignar eventos a botones de acciones
+        // Botones de acciones
         document.querySelectorAll('.editar-btn').forEach(btn => {
-            btn.onclick = () => cargarContenido(`editar_rol.php?id=${btn.dataset.id}`);
+            btn.onclick = () => navegarA(`editar_rol.php?id=${btn.dataset.id}`);
         });
         
         document.querySelectorAll('.eliminar-btn').forEach(btn => {
@@ -183,13 +152,13 @@ if (isset($_SESSION['message'])) {
         });
         
         document.querySelectorAll('.permisos-btn').forEach(btn => {
-            btn.onclick = () => cargarContenido(`permisos_roles.php?id=${btn.dataset.id}`);
+            btn.onclick = () => navegarA(`permisos_roles.php?id=${btn.dataset.id}`);
         });
     }
-    
-    // Confirmar eliminación de rol
+
+    // Función para eliminar roles
     async function confirmarEliminacion(id) {
-        if (confirm('¿Estás seguro de eliminar este rol? Esta acción no se puede deshacer.')) {
+        if (confirm('¿Estás seguro de eliminar este rol?')) {
             const formData = new FormData();
             formData.append('action', 'eliminar');
             formData.append('id', id);
@@ -202,15 +171,15 @@ if (isset($_SESSION['message'])) {
                 
                 const result = await response.json();
                 if (result.success) {
-                    cargarContenido('ver_roles.php');
+                    navegarA('ver_roles.php');
                 }
             } catch (error) {
                 console.error('Error:', error);
             }
         }
     }
-    
-    // Inicializar eventos al cargar la página
+
+    // Inicializar eventos
     document.addEventListener('DOMContentLoaded', asignarEventos);
     </script>
 </body>

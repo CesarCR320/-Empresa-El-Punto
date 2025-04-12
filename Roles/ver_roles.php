@@ -5,9 +5,11 @@ $roles = $conn->query("SELECT * FROM roles ORDER BY nombre")->fetch_all(MYSQLI_A
 <div class="card">
     <div class="card-header">
         <h2><i class="fas fa-users"></i> Listado de Roles</h2>
-        <button class="btn success" onclick="cargarContenido('agregar_rol.php')">
-            <i class="fas fa-plus"></i> Nuevo Rol
-        </button>
+        <div>
+            <button class="btn success" onclick="navegarA('agregar_rol.php')">
+                <i class="fas fa-plus"></i> Nuevo Rol
+            </button>
+        </div>
     </div>
     
     <div class="card-body">

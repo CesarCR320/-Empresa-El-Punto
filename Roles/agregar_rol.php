@@ -1,30 +1,7 @@
-<?php
-function agregarRol() {
-    global $conn;
-    
-    $nombre = trim($conn->real_escape_string($_POST['nombre'] ?? ''));
-    $descripcion = trim($conn->real_escape_string($_POST['descripcion'] ?? ''));
-    
-    if (empty($nombre)) {
-        return ['error' => 'El nombre del rol es obligatorio'];
-    }
-    
-    $sql = "INSERT INTO roles (nombre, descripcion) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $nombre, $descripcion);
-    
-    if ($stmt->execute()) {
-        return ['success' => 'Rol agregado correctamente'];
-    } else {
-        return ['error' => 'Error al agregar el rol: ' . $conn->error];
-    }
-}
-?>
-
 <div class="card">
     <div class="card-header">
         <h2><i class="fas fa-plus-circle"></i> Agregar Nuevo Rol</h2>
-        <button class="btn cancel" onclick="cargarContenido('ver_roles.php')">
+        <button class="btn cancel" onclick="navegarA('ver_roles.php')">
             <i class="fas fa-arrow-left"></i> Volver
         </button>
     </div>
