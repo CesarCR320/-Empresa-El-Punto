@@ -21,29 +21,36 @@ function agregarRol() {
 }
 ?>
 
-<div class="form-container">
-    <h2><i class="fas fa-plus-circle"></i> Agregar Nuevo Rol</h2>
+<div class="card">
+    <div class="card-header">
+        <h2><i class="fas fa-plus-circle"></i> Agregar Nuevo Rol</h2>
+        <button class="btn cancel" onclick="cargarContenido('ver_roles.php')">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
+    </div>
     
-    <form method="post">
-        <input type="hidden" name="action" value="agregar">
-        
-        <div class="form-group">
-            <label for="nombre"><i class="fas fa-tag"></i> Nombre del Rol:*</label>
-            <input type="text" id="nombre" name="nombre" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="descripcion"><i class="fas fa-align-left"></i> Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="4"></textarea>
-        </div>
-        
-        <div class="form-actions">
-            <button type="submit" class="btn primary">
-                <i class="fas fa-save"></i> Guardar Rol
-            </button>
-            <button type="button" class="btn cancel" onclick="cargarContenido('ver_roles.php')">
-                <i class="fas fa-times"></i> Cancelar
-            </button>
-        </div>
-    </form>
+    <div class="card-body">
+        <form method="post" class="form-container">
+            <input type="hidden" name="action" value="agregar">
+            
+            <div class="form-group">
+                <label for="nombre"><i class="fas fa-tag"></i> Nombre del Rol:*</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion"><i class="fas fa-align-left"></i> Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" class="form-control"></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn primary">
+                    <i class="fas fa-save"></i> Guardar Rol
+                </button>
+                <button type="reset" class="btn cancel">
+                    <i class="fas fa-undo"></i> Limpiar
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
