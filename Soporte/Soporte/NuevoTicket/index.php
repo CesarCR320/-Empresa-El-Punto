@@ -33,14 +33,27 @@
                 </header>
 
                 <div class="box-typical box-typical-padding">
-                    <p>Al crear un nuevo ticket, por favor incluya tantos detalles del problema o solicitud como le sea posible.</p>
+                    <p class="with-border">Crea un registro de incidente para reportar y solicitar asistencia con un problema que esta presentando</p>
 
                     <h5 class="m-t-lg with-border semibold">Información de contacto</h5>
                     <div class="row">
                         <div class="col-lg-6">
                             <fieldset class="form-group">
-                                <label class="form-label semibold" for="user-id-input">Id de Usuario</label>
-                                <input type="email" class="form-control" id="user-id-input" placeholder="Id de Usuario">
+                                <label class="form-label semibold" for="text">Nombre del usuario</label>
+                                <input type="text" class="form-control" id="text">
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-6">
+							<fieldset class="form-group">
+								<label class="form-label semibold" for="us-phone-mask-input">Teléfono de contacto</label>
+								<input type="phone" class="form-control" id="us-phone-mask-input">
+							</fieldset>
+						</div>
+                        <div class="col-lg-6">
+                            <fieldset class="form-group">
+                                <label class="form-label semibold" for="area-id">Área</label>
+                                <select id="area-id"  class="form-control">
+                                </select>
                             </fieldset>
                         </div>
                         <div class="col-lg-6">
@@ -49,25 +62,13 @@
                                 <input type="email" class="form-control" id="Email" placeholder="correo@elpunto.com">
                             </fieldset>
                         </div>
-                        <div class="col-lg-6">
-                            <fieldset class="form-group">
-                                <label class="form-label semibold" for="text">Nombre del usuario</label>
-                                <input type="text" class="form-control" id="text" placeholder="Nombre">
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-6">
-							<fieldset class="form-group">
-								<label class="form-label semibold" for="us-phone-mask-input">Teléfono</label>
-								<input type="phone" class="form-control" id="us-phone-mask-input">
-							</fieldset>
-						</div>
                     </div><!--.row-->
 
                     <h5 class="m-t-lg with-border semibold">Detalles del problema</h5>
                     <div class="row">
                         <div class="col-lg-6">
 							<fieldset class="form-group">
-								<label class="form-label semibold" for="main-category">Categoría</label>
+								<label class="form-label semibold" for="ticket-category">Categoría</label>
 								<select id="ticket-category" class="form-control">
 							    </select>
 							</fieldset>

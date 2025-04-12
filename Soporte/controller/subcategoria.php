@@ -15,6 +15,6 @@
             break;
         }
     } else {
-        $html = "<option value=''>No hay categorias</option>";
+        $html = "<option value=''>No hay subcategorias</option>";
     }
 ?>
