@@ -56,11 +56,120 @@ h2 {
     border: 1px solid #f5c6cb;
 }
 
-/* Menú principal */
-.menu {
+/* Cards */
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 15px 20px;
+    background: #3498db;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h2 {
+    color: white;
+    margin: 0;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Tablas */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.roles-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.roles-table th, 
+.roles-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.roles-table th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.roles-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.roles-table tr:hover {
+    background-color: #e9f7fe;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d;
+}
+
+/* Formularios */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border 0.3s;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-actions {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-top: 25px;
 }
 
 /* Botones */
@@ -109,130 +218,6 @@ h2 {
 .btn.small {
     padding: 6px 10px;
     font-size: 12px;
-}
-
-/* Tablas */
-.table-responsive {
-    overflow-x: auto;
-    margin-bottom: 20px;
-}
-
-.roles-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-.roles-table th, 
-.roles-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.roles-table th {
-    background-color: #3498db;
-    color: white;
-    font-weight: bold;
-}
-
-.roles-table tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
-
-.roles-table tr:hover {
-    background-color: #e9f7fe;
-}
-
-.actions {
-    display: flex;
-    gap: 5px;
-}
-
-.no-data {
-    text-align: center;
-    padding: 20px;
-    color: #7f8c8d;
-}
-
-/* Formularios */
-.form-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #2c3e50;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.form-group input[type="text"],
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.form-group textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.form-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 25px;
-}
-
-/* Permisos */
-.permissions-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.permissions-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.permission-item {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 4px;
-    border: 1px solid #eee;
-}
-
-.permission-item label {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.permission-item input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.permission-item strong {
-    margin-bottom: 5px;
-}
-
-.permission-item span {
-    font-size: 13px;
-    color: #7f8c8d;
 }
 
 /* Loader y estados */
@@ -286,107 +271,9 @@ h2 {
         justify-content: center;
     }
     
-    .permissions-list {
-        grid-template-columns: 1fr;
+    .card-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
     }
-}
-/* Nuevos estilos para cards */
-.card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: #3498db;
-    color: white;
-}
-
-.card-header h2 {
-    color: white;
-    margin: 0;
-    font-size: 1.3em;
-}
-
-.card-body {
-    padding: 20px;
-}
-
-/* Estilos mejorados para formularios */
-.form-control {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border 0.3s;
-}
-
-.form-control:focus {
-    border-color: #3498db;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-/* Estilos mejorados para permisos */
-.permission-item {
-    background: white;
-    padding: 15px;
-    border-radius: 6px;
-    border: 1px solid #e0e0e0;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.permission-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-.permission-content {
-    margin-left: 10px;
-}
-
-.permission-content strong {
-    display: block;
-    margin-bottom: 5px;
-    color: #2c3e50;
-}
-
-.permission-content p {
-    margin: 0;
-    color: #7f8c8d;
-    font-size: 14px;
-}
-
-/* Nuevo color para botón info */
-.btn.info {
-    background-color: #17a2b8;
-    color: white;
-}
-
-/* Mejoras para la tabla */
-.roles-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-.roles-table th {
-    position: sticky;
-    top: 0;
-}
-
-.roles-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* Efecto hover mejorado */
-.roles-table tr:hover td {
-    background-color: #f0f8ff;
 }

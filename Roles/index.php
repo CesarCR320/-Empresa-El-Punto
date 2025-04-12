@@ -3,7 +3,7 @@ require_once 'conexion_r.php';
 session_start();
 
 // Páginas válidas del sistema
-$paginasValidas = ['ver_roles.php', 'agregar_rol.php', 'editar_rol.php', 'permisos_roles.php'];
+$paginasValidas = ['ver_roles.php', 'agregar_rol.php', 'editar_rol.php'];
 
 // Determinar página a mostrar
 $pagina = 'ver_roles.php';
@@ -28,10 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         case 'eliminar':
             require_once 'eliminar_rol.php';
             $response = eliminarRol();
-            break;
-        case 'update_permissions':
-            require_once 'permisos_roles.php';
-            $response = actualizarPermisos();
             break;
     }
     
@@ -69,31 +65,15 @@ if (isset($_SESSION['message'])) {
             </div>
         <?php endif; ?>
         
-        <nav class="menu">
-            <button class="btn primary" onclick="navegarA('ver_roles.php')">
-                <i class="fas fa-list"></i> Ver Roles
-            </button>
-            <button class="btn success" onclick="navegarA('agregar_rol.php')">
-                <i class="fas fa-plus"></i> Agregar Rol
-            </button>
-        </nav>
-        
         <div id="contenido-dinamico">
             <?php include $pagina; ?>
         </div>
     </div>
 
     <script>
-    // Función para navegar manteniendo la URL limpia
-    function navegarA(pagina) {
-        history.pushState(null, null, pagina);
-        cargarContenido(pagina);
-    }
-
     // Función para cargar contenido
     async function cargarContenido(url) {
         try {
-            // Mostrar loader
             document.getElementById('contenido-dinamico').innerHTML = `
                 <div class="loader">
                     <i class="fas fa-spinner fa-spin"></i> Cargando...
@@ -112,12 +92,6 @@ if (isset($_SESSION['message'])) {
         }
     }
 
-    // Manejar el botón de retroceso
-    window.addEventListener('popstate', function(event) {
-        const pagina = window.location.pathname.split('/').pop() || 'ver_roles.php';
-        cargarContenido(pagina);
-    });
-
     // Asignar eventos dinámicos
     function asignarEventos() {
         // Botones de formularios
@@ -127,6 +101,12 @@ if (isset($_SESSION['message'])) {
                 const formData = new FormData(form);
                 
                 try {
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+                        submitBtn.disabled = true;
+                    }
+                    
                     const response = await fetch('index.php', {
                         method: 'POST',
                         body: formData
@@ -134,7 +114,7 @@ if (isset($_SESSION['message'])) {
                     
                     const result = await response.json();
                     if (result.success) {
-                        navegarA('ver_roles.php');
+                        cargarContenido('ver_roles.php');
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -142,45 +122,16 @@ if (isset($_SESSION['message'])) {
             };
         });
         
-        // Botones de acciones
+        // Botones de editar
         document.querySelectorAll('.editar-btn').forEach(btn => {
-            btn.onclick = () => navegarA(`editar_rol.php?id=${btn.dataset.id}`);
+            btn.onclick = () => cargarContenido(`editar_rol.php?id=${btn.dataset.id}`);
         });
-        
-        document.querySelectorAll('.eliminar-btn').forEach(btn => {
-            btn.onclick = () => confirmarEliminacion(btn.dataset.id);
-        });
-        
-        document.querySelectorAll('.permisos-btn').forEach(btn => {
-            btn.onclick = () => navegarA(`permisos_roles.php?id=${btn.dataset.id}`);
-        });
-    }
-
-    // Función para eliminar roles
-    async function confirmarEliminacion(id) {
-        if (confirm('¿Estás seguro de eliminar este rol?')) {
-            const formData = new FormData();
-            formData.append('action', 'eliminar');
-            formData.append('id', id);
-            
-            try {
-                const response = await fetch('index.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                if (result.success) {
-                    navegarA('ver_roles.php');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
     }
 
     // Inicializar eventos
-    document.addEventListener('DOMContentLoaded', asignarEventos);
+    document.addEventListener('DOMContentLoaded', function() {
+        asignarEventos();
+    });
     </script>
 </body>
 </html>
