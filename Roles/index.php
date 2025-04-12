@@ -77,9 +77,10 @@ if (isset($_SESSION['message'])) {
     </div>
 
     <script>
-    // Función para cargar contenido
+    // Función para cargar contenido dinámico
     async function cargarContenido(url) {
         try {
+            // Mostrar loader
             document.getElementById('contenido-dinamico').innerHTML = `
                 <div class="loader">
                     <i class="fas fa-spinner fa-spin"></i> Cargando...
@@ -98,33 +99,47 @@ if (isset($_SESSION['message'])) {
         }
     }
 
+    // Función para manejar el envío de formularios
+    async function manejarEnvioFormulario(form) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const btnOriginalHTML = submitBtn.innerHTML;
+        
+        try {
+            // Mostrar estado de carga
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            submitBtn.disabled = true;
+            
+            const formData = new FormData(form);
+            
+            const response = await fetch('index.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                cargarContenido('ver_roles.php');
+            } else {
+                alert('Error: No se pudo completar la operación');
+                submitBtn.innerHTML = btnOriginalHTML;
+                submitBtn.disabled = false;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Ocurrió un error al procesar la solicitud');
+            submitBtn.innerHTML = btnOriginalHTML;
+            submitBtn.disabled = false;
+        }
+    }
+
     // Asignar eventos dinámicos
     function asignarEventos() {
         // Botones de formularios
         document.querySelectorAll('form').forEach(form => {
             form.onsubmit = async (e) => {
                 e.preventDefault();
-                const formData = new FormData(form);
-                
-                try {
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    if (submitBtn) {
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
-                        submitBtn.disabled = true;
-                    }
-                    
-                    const response = await fetch('index.php', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    if (result.success) {
-                        cargarContenido('ver_roles.php');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
+                await manejarEnvioFormulario(form);
             };
         });
         
@@ -162,9 +177,15 @@ if (isset($_SESSION['message'])) {
         }
     }
 
-    // Inicializar eventos
+    // Inicializar eventos al cargar la página
     document.addEventListener('DOMContentLoaded', function() {
         asignarEventos();
+        
+        // Manejar el botón de retroceso
+        window.addEventListener('popstate', function() {
+            const pagina = window.location.pathname.split('/').pop() || 'ver_roles.php';
+            cargarContenido(pagina);
+        });
     });
     </script>
 </body>
