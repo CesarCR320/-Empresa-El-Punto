@@ -23,6 +23,13 @@ function editarRol() {
     }
 }
 
+// Solo procesar POST si es una solicitud POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'editar') {
+    header('Content-Type: application/json');
+    echo json_encode(editarRol());
+    exit();
+}
+
 $id = intval($_GET['id'] ?? 0);
 $rol = $conn->query("SELECT * FROM roles WHERE id = $id")->fetch_assoc();
 
@@ -58,7 +65,7 @@ if (!$rol) {
                 <button type="submit" class="btn primary" id="btn-guardar">
                     <i class="fas fa-save"></i> Guardar Cambios
                 </button>
-                <button type="button" class="btn cancel" onclick="cargarContenido('ver_roles.php')">
+                <button type="button" class="btn cancel" onclick="window.location.href='ver_roles.php'">
                     <i class="fas fa-times"></i> Cancelar
                 </button>
             </div>
@@ -80,24 +87,28 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const formData = new FormData(form);
         
-        fetch('index.php', {
+        fetch('editar_rol.php', {  // Cambiado a editar_rol.php
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                cargarContenido('ver_roles.php');
+                window.location.href = 'ver_roles.php?success=' + encodeURIComponent(data.success);
             } else {
-                // Mostrar mensaje de error
                 alert('Error: ' + (data.error || 'Error desconocido'));
-                btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar Cambios';
-                btnGuardar.disabled = false;
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Ocurrió un error al guardar');
+            alert('Error al conectar con el servidor: ' + error.message);
+        })
+        .finally(() => {
             btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar Cambios';
             btnGuardar.disabled = false;
         });
