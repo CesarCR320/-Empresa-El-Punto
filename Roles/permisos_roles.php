@@ -56,7 +56,7 @@ $asignados = $conn->query("SELECT permiso_id FROM rol_permisos WHERE rol_id = $i
             <button type="submit" class="btn primary">
                 <i class="fas fa-save"></i> Guardar Permisos
             </button>
-            <button type="button" class="btn cancel" onclick="loadContent('ver_roles.php')">
+            <button type="button" class="btn cancel" onclick="cargarContenido('ver_roles.php')">
                 <i class="fas fa-times"></i> Volver
             </button>
         </div>

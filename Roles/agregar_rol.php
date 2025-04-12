@@ -28,24 +28,20 @@ function agregarRol() {
         <input type="hidden" name="action" value="agregar">
         
         <div class="form-group">
-            <label for="nombre">
-                <i class="fas fa-tag"></i> Nombre del Rol:*
-            </label>
+            <label for="nombre"><i class="fas fa-tag"></i> Nombre del Rol:*</label>
             <input type="text" id="nombre" name="nombre" required>
         </div>
         
         <div class="form-group">
-            <label for="descripcion">
-                <i class="fas fa-align-left"></i> Descripción:
-            </label>
+            <label for="descripcion"><i class="fas fa-align-left"></i> Descripción:</label>
             <textarea id="descripcion" name="descripcion" rows="4"></textarea>
         </div>
         
         <div class="form-actions">
-            <button type="submit" class="btn success">
+            <button type="submit" class="btn primary">
                 <i class="fas fa-save"></i> Guardar Rol
             </button>
-            <button type="button" class="btn cancel" onclick="loadContent('ver_roles.php')">
+            <button type="button" class="btn cancel" onclick="cargarContenido('ver_roles.php')">
                 <i class="fas fa-times"></i> Cancelar
             </button>
         </div>

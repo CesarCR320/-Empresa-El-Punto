@@ -39,6 +39,9 @@ h2 {
     padding: 12px 15px;
     margin-bottom: 20px;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .alert.success {
@@ -167,6 +170,9 @@ h2 {
     margin-bottom: 8px;
     font-weight: bold;
     color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .form-group input[type="text"],
@@ -232,13 +238,24 @@ h2 {
 /* Loader y estados */
 .loader {
     text-align: center;
-    padding: 30px;
-    color: #7f8c8d;
+    padding: 50px;
+    color: #3498db;
+    font-size: 1.2em;
 }
 
 .loader i {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 2em;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); }
 }
 
 .error {
