@@ -56,31 +56,11 @@ h2 {
     border: 1px solid #f5c6cb;
 }
 
-/* Cards */
-.card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.card-header {
-    padding: 15px 20px;
-    background: #3498db;
-    color: white;
+/* Menú principal */
+.menu {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-header h2 {
-    color: white;
-    margin: 0;
-}
-
-.card-body {
-    padding: 20px;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 /* Tablas */
@@ -106,8 +86,6 @@ h2 {
     background-color: #3498db;
     color: white;
     font-weight: bold;
-    position: sticky;
-    top: 0;
 }
 
 .roles-table tr:nth-child(even) {
@@ -131,7 +109,7 @@ h2 {
 
 /* Formularios */
 .form-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -144,21 +122,17 @@ h2 {
     margin-bottom: 8px;
     font-weight: bold;
     color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .form-control {
     width: 100%;
-    padding: 10px 15px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
-    transition: border 0.3s;
-}
-
-.form-control:focus {
-    border-color: #3498db;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 .form-group textarea {
@@ -197,11 +171,6 @@ h2 {
 
 .btn.primary {
     background-color: #3498db;
-    color: white;
-}
-
-.btn.success {
-    background-color: #2ecc71;
     color: white;
 }
 
@@ -269,11 +238,5 @@ h2 {
     .btn {
         width: 100%;
         justify-content: center;
-    }
-    
-    .card-header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
     }
 }

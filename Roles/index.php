@@ -65,6 +65,12 @@ if (isset($_SESSION['message'])) {
             </div>
         <?php endif; ?>
         
+        <div class="menu">
+            <button class="btn primary" onclick="cargarContenido('agregar_rol.php')">
+                <i class="fas fa-plus"></i> Agregar Rol
+            </button>
+        </div>
+        
         <div id="contenido-dinamico">
             <?php include $pagina; ?>
         </div>
@@ -126,6 +132,34 @@ if (isset($_SESSION['message'])) {
         document.querySelectorAll('.editar-btn').forEach(btn => {
             btn.onclick = () => cargarContenido(`editar_rol.php?id=${btn.dataset.id}`);
         });
+        
+        // Botones de eliminar
+        document.querySelectorAll('.eliminar-btn').forEach(btn => {
+            btn.onclick = () => confirmarEliminacion(btn.dataset.id);
+        });
+    }
+
+    // Función para confirmar eliminación
+    async function confirmarEliminacion(id) {
+        if (confirm('¿Estás seguro de eliminar este rol?')) {
+            const formData = new FormData();
+            formData.append('action', 'eliminar');
+            formData.append('id', id);
+            
+            try {
+                const response = await fetch('index.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    cargarContenido('ver_roles.php');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
     }
 
     // Inicializar eventos

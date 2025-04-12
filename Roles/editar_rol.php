@@ -29,37 +29,35 @@ if (!$rol) {
 }
 ?>
 
-<div class="card">
-    <div class="card-body">
-        <h2><i class="fas fa-edit"></i> Editar Rol</h2>
+<div class="form-container">
+    <h2><i class="fas fa-edit"></i> Editar Rol</h2>
+    
+    <form method="post">
+        <input type="hidden" name="action" value="editar">
+        <input type="hidden" name="id" value="<?= $rol['id'] ?>">
         
-        <form method="post" class="form-container">
-            <input type="hidden" name="action" value="editar">
-            <input type="hidden" name="id" value="<?= $rol['id'] ?>">
-            
-            <div class="form-group">
-                <label for="id_rol">ID:</label>
-                <input type="text" id="id_rol" value="<?= $rol['id'] ?>" class="form-control" disabled>
-            </div>
-            
-            <div class="form-group">
-                <label for="nombre">Nombre del Rol:*</label>
-                <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($rol['nombre']) ?>" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4" class="form-control"><?= htmlspecialchars($rol['descripcion']) ?></textarea>
-            </div>
-            
-            <div class="form-actions">
-                <button type="submit" class="btn primary">
-                    <i class="fas fa-save"></i> Guardar Cambios
-                </button>
-                <button type="button" class="btn cancel" onclick="cargarContenido('ver_roles.php')">
-                    <i class="fas fa-times"></i> Cancelar
-                </button>
-            </div>
-        </form>
-    </div>
+        <div class="form-group">
+            <label for="id_rol">ID:</label>
+            <input type="text" id="id_rol" value="<?= $rol['id'] ?>" class="form-control" disabled>
+        </div>
+        
+        <div class="form-group">
+            <label for="nombre">Nombre del Rol:*</label>
+            <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($rol['nombre']) ?>" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="4" class="form-control"><?= htmlspecialchars($rol['descripcion']) ?></textarea>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn primary">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+            <button type="button" class="btn cancel" onclick="cargarContenido('ver_roles.php')">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+        </div>
+    </form>
 </div>
