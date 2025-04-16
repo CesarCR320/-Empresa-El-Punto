@@ -4,9 +4,9 @@
 
     # Verificar si el formulario fue enviado
     if (isset($_POST["enviar"]) && $_POST["enviar"] == "si") {
-        require_once "modelos/Empleados.php";
-        $empleados = new Empleados();
-        $empleados->login();
+        require_once "modelos/Acceso.php";
+        $acceso = new Acceso();
+        $acceso->login();
     }
 ?>
  

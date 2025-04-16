@@ -1,5 +1,5 @@
 <?php
-    class Empleados extends Conectar {
+    class Acceso extends Conectar {
         public function login () {
             $conectar = parent::conexion();
             parent::set_names();

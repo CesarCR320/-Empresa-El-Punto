@@ -40,7 +40,7 @@
                         <div class="col-lg-6">
                             <fieldset class="form-group">
                                 <label class="form-label semibold" for="text">Nombre del usuario</label>
-                                <input type="text" class="form-control" id="text">
+                                <input type="text" class="form-control" id="usuario-select">
                             </fieldset>
                         </div>
                         <div class="col-lg-6">
