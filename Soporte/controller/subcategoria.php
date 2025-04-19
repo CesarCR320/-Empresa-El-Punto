@@ -9,7 +9,7 @@
             case "combo":
                 $data = Array();
                 foreach ($datos as $row) {
-                    $html .= "<option value='" . $row["s_id"] . "'>" . $row["s_name"] . "</option>";
+                    $html .= "<option value='" . $row["sc_id"] . "'>" . $row["sc_name"] . "</option>";
                 }
                 echo $html;
             break;
