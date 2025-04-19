@@ -41,12 +41,13 @@
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="text">Nombre del usuario</label>
-                                    <input type="text" class="form-control" id="usuario-select">
+                                    <input type="hidden" id="e_idx" value="<?php echo $_SESSION["e_id"] ?>"> <!-- ID del empleado -->
+                                    <input type="text" disabled class="form-control" id="usuario-select" value="<?php echo $_SESSION["e_name"] ?> <?php echo $_SESSION["e_last1"] ?> <?php echo $_SESSION["e_last2"] ?>"><!-- Muestra el nombre compledo del empleado -->
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="us-phone-mask-input">Teléfono de contacto</label>
+                                    <label class="form-label semibold" for="us-phone-mask-input">Teléfono alternativo de contacto</label>
                                     <input type="phone" class="form-control" id="us-phone-mask-input">
                                 </fieldset>
                             </div>
@@ -60,7 +61,7 @@
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="Email">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="Email" placeholder="correo@elpunto.com">
+                                    <input type="email" disabled class="form-control" id="Email" value="<?php echo $_SESSION["e_mail"] ?>">
                                 </fieldset>
                             </div>
                         </div><!--.row-->

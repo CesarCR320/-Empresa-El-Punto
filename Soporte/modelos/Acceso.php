@@ -16,7 +16,7 @@
                 }
 
                 # Verificar datos de acceso
-                $sql = "SELECT * FROM empleados WHERE e_mail = ? and e_pass = ? and stat = 1";
+                $sql = "SELECT * FROM empleados WHERE e_mail = ? and e_pass = ? and e_stat = 1";
                 $stmt = $conectar->prepare($sql);
                 $stmt->bindValue(1, $correo);
                 $stmt->bindValue(2, $password);
@@ -27,7 +27,9 @@
                 if (is_array($resultado) && count($resultado) > 0) {
                     $_SESSION["e_id"] = $resultado["e_id"];
                     $_SESSION["e_name"] = $resultado["e_name"];
-                    $_SESSION["e_last"] = $resultado["e_last"];
+                    $_SESSION["e_last1"] = $resultado["e_last1"];
+                    $_SESSION["e_last2"] = $resultado["e_last2"];
+                    $_SESSION["e_mail"] = $resultado["e_mail"];
 
                     # Redireccionar a la página de inicio
                     header("Location:" . Conectar::ruta() . "Home/");

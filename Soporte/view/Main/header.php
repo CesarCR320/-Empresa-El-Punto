@@ -89,7 +89,7 @@
                         <div class="dropdown dropdown-typical">
                             <a href="#" class="dropdown-toggle no-arr">
                                 <span class="font-icon font-icon-user"></span>
-                                <span class="lblcontactonomx"><?php echo $_SESSION["e_name"] ?> <?php echo $_SESSION["e_last"] ?></span>
+                                <span class="lblcontactonomx"><?php echo $_SESSION["e_name"] ?> <?php echo $_SESSION["e_last1"] ?></span>
                             </a>
                         </div>
 
