@@ -83,6 +83,7 @@
                                     </select>
                                 </fieldset>
                             </div>
+                            
                             <div class="col-lg-12">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="short-description">Descripción corta</label>
