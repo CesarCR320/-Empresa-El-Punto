@@ -15,4 +15,5 @@
         <link rel="stylesheet" href="/-Empresa-El-Punto/Soporte/public/css/lib/font-awesome/font-awesome.min.css">
         <link rel="stylesheet" href="/-Empresa-El-Punto/Soporte/public/css/lib/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="/-Empresa-El-Punto/Soporte/public/css/main.css">
-        
+        <link rel="stylesheet" href="/-Empresa-El-Punto/Soporte/public/css/lib/bootstrap-sweetalert/sweetalert.css">
+        <link rel="stylesheet" href="/-Empresa-El-Punto/Soporte/public/css/separate/vendor/sweet-alert-animations.min.css">

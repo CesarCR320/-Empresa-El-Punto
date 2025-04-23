@@ -41,20 +41,20 @@
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="text">Nombre del usuario</label>
-                                    <input type="hidden" id="e_idx" value="<?php echo $_SESSION["e_id"] ?>"> <!-- ID del empleado -->
+                                    <input type="hidden" id="emp_id" name="emp_id" value="<?php echo $_SESSION["e_id"] ?>"> <!-- ID del empleado -->
                                     <input type="text" disabled class="form-control" id="usuario-select" value="<?php echo $_SESSION["e_name"] ?> <?php echo $_SESSION["e_last1"] ?> <?php echo $_SESSION["e_last2"] ?>"><!-- Muestra el nombre compledo del empleado -->
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="us-phone-mask-input">Teléfono alternativo de contacto</label>
-                                    <input type="phone" class="form-control" id="us-phone-mask-input">
+                                    <label class="form-label semibold" for="t_phone">Teléfono alternativo de contacto</label>
+                                    <input type="phone" class="form-control" name="t_phone" id="t_phone" required>
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="area-id">Área</label>
-                                    <select id="area-id"  class="form-control">
+                                    <label class="form-label semibold" for="area_id">Área</label>
+                                    <select id="area_id" name="area_id" class="form-control" required>
                                     </select>
                                 </fieldset>
                             </div>
@@ -70,15 +70,15 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="ticket-category">Categoría</label>
-                                    <select id="ticket-category" class="form-control">
+                                    <label class="form-label semibold" for="cat_id">Categoría</label>
+                                    <select id="cat_id" name="cat_id" class="form-control" required>
                                     </select>
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="subcategory">Subcategoría</label>
-                                    <select id="subcategory" class="form-control">
+                                    <label class="form-label semibold" for="scat_id">Subcategoría</label>
+                                    <select id="scat_id" name="scat_id" class="form-control" required>
                                         <option value="" disabled selected>- Seleccione una subcategoría -</option>
                                     </select>
                                 </fieldset>
@@ -86,15 +86,15 @@
                             
                             <div class="col-lg-12">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="short-description">Descripción corta</label>
-                                    <input type="text" class="form-control" id="short-description">
+                                    <label class="form-label semibold" for="t_tit">Descripción corta</label>
+                                    <input type="text" class="form-control" id="t_tit" name="t_tit" required>
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="ticket-description">Descripción detallada</label>
+                                    <label class="form-label semibold" for="t_desc">Descripción detallada</label>
                                     <div class="summernote-theme-1">
-                                        <textarea id="ticket-description" class="summernote" name="name"></textarea>
+                                        <textarea id="t_desc" class="summernote" name="t_desc" required></textarea>
                                     </div>
                                 </fieldset>
                             </div>
