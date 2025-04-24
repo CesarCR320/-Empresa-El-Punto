@@ -4,7 +4,7 @@
 ?>
 
 <?php   require_once '../view/Main/head.php'; ?>
-        <title>Soporte :: Principal</title>
+        <title>El Punto :: Soporte</title>
     </head>
     <body class="with-side-menu">
 
@@ -21,7 +21,7 @@
                     <div class="tbl">
                         <div class="tbl-row">
                             <div class="tbl-cell">
-                                <h3>Soporte Principal</h3>
+                                <h3>Soporte - Principal</h3>
                                 <ol class="breadcrumb breadcrumb-simple">
                                     <li><a href="../Home">Inicio</a></li>
                                     <li><a href="#">Soporte</a></li>
@@ -33,7 +33,7 @@
             </div><!--.container-fluid-->
         </div><!--.page-content-->
         <?php   require_once '../view/Main/js.php'; ?>
-        <script type="text/javascript" src="consult-ticket.js"></script>
+        <script type="text/javascript" src="support.js"></script>
     </body>
 </html>
 <?php

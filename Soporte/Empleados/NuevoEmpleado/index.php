@@ -4,7 +4,7 @@
 ?>
 
 <?php   require_once '../../view/Main/head.php'; ?>
-        <title>El Punto :: Documentación</title>
+        <title>El Punto :: Nuevo Empleado</title>
     </head>
     <body class="with-side-menu">
 
@@ -21,11 +21,11 @@
                     <div class="tbl">
                         <div class="tbl-row">
                             <div class="tbl-cell">
-                                <h3>Documentación</h3>
+                                <h3>Nuevo Empleado</h3>
                                 <ol class="breadcrumb breadcrumb-simple">
                                     <li><a href="../../Home">Inicio</a></li>
-                                    <li><a href="../">Soporte</a></li>
-                                    <li class="active">Documentación</li>
+                                    <li><a href="../">Empleados</a></li>
+                                    <li class="active">Nuevo Empleado</li>
                                 </ol>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
             </div><!--.container-fluid-->
         </div><!--Contenido de la página-->
         <?php   require_once '../../view/Main/js.php'; ?>
-        <script type="text/javascript" src="home.js"></script>
+        <script type="text/javascript" src="newemployee.js"></script>
     </body>
 </html>
 <?php

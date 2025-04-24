@@ -38,9 +38,9 @@
                 <span class="lbl">Empleados</span>
             </span>
             <ul>
-                <li><a href="#"><span class="lbl">Consultar Empleados</span></a></li>
-                <li><a href="#"><span class="lbl">Nuevo Empleado</span></a></li>
-                <li><a href="#"><span class="lbl">Modificar Empleados</span></a></li>
+                <li><a href="/-Empresa-El-Punto/Soporte/Empleados/NuevoEmpleado"><span class="lbl">Nuevo Empleado</span></a></li>
+                <li><a href="/-Empresa-El-Punto/Soporte/Empleados/ConsultarEmpleado"><span class="lbl">Consultar Empleados</span></a></li>
+                <li><a href="/-Empresa-El-Punto/Soporte/Empleados/GestionarEmpleado"><span class="lbl">Gestionar Empleados</span></a></li>
             </ul>
         </li>
 

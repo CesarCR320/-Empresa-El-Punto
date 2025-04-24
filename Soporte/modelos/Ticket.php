@@ -51,6 +51,49 @@
             $sql -> execute();
             return $t_num;
         }
+
+        public function listarTicketUsuario($emp_id) {
+            $conectar = parent::conexion();
+            parent::set_names();
+
+            // Obtener número de ticket único
+            $t_num = $this -> generarTicketID($conectar);
+            
+            $sql = "SELECT
+                tickets.t_id,
+                tickets.t_num,
+                tickets.t_tit,
+                tickets.area_id,
+                tickets.emp_id,
+                tickets.t_phone,
+                tickets.cat_id,
+                tickets.scat_id,
+                tickets.est_id,
+                tickets.sest_id,
+                tickets.t_desc,
+                empleados.e_name,
+                empleados.e_last1,
+                area.a_name,
+                categorias.c_name,
+                subcategorias.sc_name,
+                estatus.st_name,
+                subestatus.se_name
+                FROM ticket
+                INNER JOIN empleados ON tickets.emp_id  = empleados.e_id
+                INNER JOIN area ON tickets.area_id = area.a_id
+                INNER JOIN categorias ON tickets.cat_id = categorias.c_id
+                INNER JOIN subcategorias ON tickets.scat_id = subcategorias.sc_id
+                INNER JOIN estatus ON tickets.est_id = estatus.st_id
+                INNER JOIN subestatus ON tickets.sest_id = se_id
+                WHERE empleados.e_id = ?";
+            
+            $sql = $conectar->prepare($sql);
+            
+            $sql -> bindValue(1, $emp_id);
+
+            $sql -> execute();
+            return $resultado = $sql->fetchAll();
+        }
     }
 
 ?>
