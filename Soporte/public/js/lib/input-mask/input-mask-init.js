@@ -11,4 +11,5 @@ $(document).ready(function() {
     $('#mixed-mask-input').mask('AAA 000-S0S');
     $('#user-id-input').mask('AA000000');
     $('#t_phone').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
+    $('#e_phone').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 });

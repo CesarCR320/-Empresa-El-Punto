@@ -31,6 +31,90 @@
                         </div>
                     </div>
                 </header>
+
+                <div class="box-typical box-typical-padding">
+                    <form method="post" id="form-signup_v1" name="form-signup_v1">
+                        <p class="with-border">Realiza el alta de un nuevo empleado</p>
+
+                        <h5 class="m-t-lg with-border semibold">Información personal del empleado</h5>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="e_name">Nombre</label>
+                                    <input type="text" class="form-control" id="e_name" name="e_name" required>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="e_last1">Apellido Paterno</label>
+                                    <input type="text" class="form-control" id="e_last1" name="e_last1" required>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="e_last2">Apellido Materno</label>
+                                    <input type="text" class="form-control" id="e_last2" name="e_last2">
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="e_phone">Teléfono de contacto</label>
+                                    <input type="phone" class="form-control" name="e_phone" id="e_phone" required>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="e_pass">Contraseña</label>
+                                    <!-- <input type="password" class="form-control" name="e_pass" id="e_pass" required> -->
+                                    <div class="form-control-wrapper">
+										<input id="signup_v1-password"
+											   class="form-control"
+											   name="signup_v1[password]"
+											   type="password" data-validation="[L>=6]"
+											   data-validation-message="$ must be at least 6 characters">
+									</div>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="e_phone">Confirmar contraseña</label>
+                                    <!-- <input type="password" class="form-control" name="e_pass" id="e_pass" required> -->
+                                    <div class="form-control-wrapper">
+										<input id="signup_v1-password-confirm"
+											   class="form-control"
+											   name="signup_v1[password-confirm]"
+											   type="password" data-validation="[V==signup_v1[password]]"
+											   data-validation-message="$ does not match the password">
+									</div>
+                                </fieldset>
+                            </div>
+                        </div><!--.row-->
+
+                        <h5 class="m-t-lg with-border semibold">Área y puesto en la empresa</h5>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="area_id">Área</label>
+                                    <select id="area_id" name="area_id" class="form-control" required>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-6">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="pue_id">Puesto</label>
+                                    <select id="pue_id" name="pue_id" class="form-control" required>
+                                        <option value="" disabled selected>- Seleccione un puesto -</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <button type="submit" name="action" value="add" class="btn btn-rounded btn-inline btn-primary">Guardar</button>
+                            </div>
+                        </div><!--.row-->
+                    </form><!-- ticket form -->
+                </div>
             </div><!--.container-fluid-->
         </div><!--Contenido de la página-->
         <?php   require_once '../../view/Main/js.php'; ?>
