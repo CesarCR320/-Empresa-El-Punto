@@ -59,13 +59,13 @@
         </li>
 
         <!-- Contactos -->
-        <li class="red">
+        <!-- <li class="red">
             <a href="contacts.html" class="label-right">
                 <i class="font-icon font-icon-contacts"></i>
                 <span class="lbl">Contactos</span>
                 <span class="label label-custom label-pill label-danger">69</span>
             </a>
-        </li>
+        </li> -->
     </ul>
 
     <section>
