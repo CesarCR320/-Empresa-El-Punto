@@ -1,6 +1,6 @@
 function init() {
     // Inicializa el formulario
-    $('#form-signup_v1').on('submit', function(e) {
+    $('#employee-form').on('submit', function(e) {
         guardaryeditar(e); // Llama a la función para guardar o editar el empleado
     });
 
@@ -30,20 +30,8 @@ $(document).ready(function() { // Llama a la función cuando el DOM está listo
 });
 
 $(function() {
-    /* ==========================================================================
-                                        Validation
-     ========================================================================== */
-
+    // Validación de las contraseñas
     $('#form-signup_v1').validate({
-        submit: {
-            settings: {
-                inputContainer: '.form-group',
-                errorListClass: 'form-tooltip-error'
-            }
-        }
-    });
-
-    $('#form-signup_v2').validate({
         submit: {
             settings: {
                 inputContainer: '.form-group',
@@ -56,7 +44,7 @@ $(function() {
 function guardaryeditar(e) {
     e.preventDefault(); // Evita el envío del formulario por defecto
 
-    var formData = new FormData($("#form-signup_v1")[0]);
+    var formData = new FormData($("#employee-form")[0]);
 
     $.ajax({
         url: "../../controller/empleado.php?op=insert",
@@ -66,7 +54,7 @@ function guardaryeditar(e) {
         processData: false,
         success: function(response) {
             // console.log(response); // Verifica la respuesta del servidor
-            $("#form-signup_v1")[0].reset(); // Reinicia el formulario
+            $("#employee-form")[0].reset(); // Reinicia el formulario
             // Mensaje de éxito
             swal({
                 title: "Registro Exitoso",

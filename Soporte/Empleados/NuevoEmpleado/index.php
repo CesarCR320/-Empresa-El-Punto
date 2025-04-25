@@ -33,7 +33,7 @@
                 </header>
 
                 <div class="box-typical box-typical-padding">
-                    <form method="post" id="form-signup_v1" name="form-signup_v1">
+                    <form method="post" id="employee-form" name="employee-form">
                         <p class="with-border">Realiza el alta de un nuevo empleado</p>
 
                         <h5 class="m-t-lg with-border semibold">Información personal del empleado</h5>
@@ -66,20 +66,20 @@
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="e_pass">Contraseña</label>
-                                    <!-- <input type="password" class="form-control" name="e_pass" id="e_pass" required> -->
-                                    <div class="form-control-wrapper">
+                                    <input type="password" class="form-control" name="e_pass" id="e_pass" required>
+                                    <!-- <div class="form-control-wrapper">
 										<input id="signup_v1-password"
 											   class="form-control"
 											   name="signup_v1[password]"
 											   type="password" data-validation="[L>=6]"
 											   data-validation-message="$ must be at least 6 characters">
-									</div>
+									</div> -->
                                 </fieldset>
                             </div>
-                            <div class="col-lg-4">
+                            <!-- <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="e_phone">Confirmar contraseña</label>
-                                    <!-- <input type="password" class="form-control" name="e_pass" id="e_pass" required> -->
+                                    <label class="form-label semibold" for="e_pass">Confirmar contraseña</label>
+                                    <input type="password" class="form-control" name="e_pass" id="e_pass">
                                     <div class="form-control-wrapper">
 										<input id="signup_v1-password-confirm"
 											   class="form-control"
@@ -88,7 +88,7 @@
 											   data-validation-message="$ does not match the password">
 									</div>
                                 </fieldset>
-                            </div>
+                            </div> -->
                         </div><!--.row-->
 
                         <h5 class="m-t-lg with-border semibold">Área y puesto en la empresa</h5>
