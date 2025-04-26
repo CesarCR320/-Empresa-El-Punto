@@ -79,12 +79,13 @@ DROP TABLE IF EXISTS `empleados`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `empleados` (
   `e_id` int NOT NULL AUTO_INCREMENT,
-  `e_uid` varchar(8) NOT NULL,
-  `e_name` varchar(50) NOT NULL,
-  `e_last` varchar(100) DEFAULT NULL,
-  `e_mail` varchar(50) NOT NULL,
-  `e_phone` varchar(10) NOT NULL,
-  `e_pass` varchar(255) NOT NULL,
+  `e_uid` varchar(8) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `e_name` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `e_last1` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `e_last2` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `e_mail` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `e_phone` varchar(15) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `e_pass` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `pue_id` int NOT NULL,
   `area_id` int NOT NULL,
   `e_stat` int NOT NULL,
@@ -99,7 +100,7 @@ CREATE TABLE `empleados` (
   CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`pue_id`) REFERENCES `puestos` (`p_id`),
   CONSTRAINT `empleados_ibfk_2` FOREIGN KEY (`area_id`) REFERENCES `areas` (`a_id`),
   CONSTRAINT `empleados_chk_1` CHECK ((`e_stat` in (0,1)))
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +109,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES (1,'UA000000','Administrador',NULL,'admin@elpunto.com','0','123456',31,11,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(2,'AV000001','Alejandro','Villaseñor Villaseñor','alejandro.villasenor@elpunto.com','4433462649','hashed_password_1',1,1,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(3,'CR000002','Carlos','Ramírez Díaz','carlos.ramirez@elpunto.com','5511122233','hashed_password_2',6,2,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(4,'EG000003','Elena','Gómez Torres','elena.gomez@elpunto.com','5544455566','hashed_password_3',10,4,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(5,'LF000004','Luis','Fernández Ríos','luis.fernandez@elpunto.com','5588899900','hashed_password_4',15,5,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(6,'VC000005','Valeria','Cruz Herrera','valeria.cruz@elpunto.com','5577332211','hashed_password_5',36,12,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(7,'RS000006','Roberto','Santos Aguilar','roberto.santos@elpunto.com','5512345678','hashed_admin_pass',2,1,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(8,'DV000007','Diana','Vargas Méndez','diana.vargas@elpunto.com','5598765432','hashed_leader_pass',37,12,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL),(9,'MH000008','Miguel','Hernández León','miguel.hernandez@elpunto.com','5543219876','hashed_lvl1_pass',38,12,1,'2025-04-19 00:32:39','2025-04-19 00:32:39',NULL);
+INSERT INTO `empleados` VALUES (1,'UA000000','Administrador',NULL,NULL,'admin@elpunto.com','0','123456',31,11,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(2,'AV000001','Alejandro','Villaseñor','Villaseñor','alejandro.villasenor@elpunto.com','4433462649','hashed_password_1',1,1,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(3,'CR000002','Carlos','Ramírez','Díaz','carlos.ramirez@elpunto.com','5511122233','hashed_password_2',6,2,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(4,'EG000003','Elena','Gómez','Torres','elena.gomez@elpunto.com','5544455566','hashed_password_3',10,4,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(5,'LF000004','Luis','Fernández','Ríos','luis.fernandez@elpunto.com','5588899900','hashed_password_4',15,5,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(6,'VC000005','Valeria','Cruz','Herrera','valeria.cruz@elpunto.com','5577332211','hashed_password_5',36,12,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(7,'RS000006','Roberto','Santos','Aguilar','roberto.santos@elpunto.com','5512345678','hashed_admin_pass',2,1,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(8,'DV000007','Diana','Vargas','Méndez','diana.vargas@elpunto.com','5598765432','hashed_leader_pass',37,12,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(9,'MH000008','Miguel','Hernández','León','miguel.hernandez@elpunto.com','5543219876','hashed_lvl1_pass',38,12,1,'2025-04-19 01:18:33','2025-04-19 01:18:33',NULL),(10,'LM129799','Lenin','Meza','Jacuinde','lenin.meza@elpunto.com','(443) 841-9282','Password123',31,11,1,'2025-04-25 00:34:08','2025-04-25 00:34:08',NULL),(11,'MA937838','Mauricio','Alcaraz','Tapia','mauricio.alcaraz@elpunto.com','(436) 172-0090','Password123',31,11,1,'2025-04-25 02:49:16','2025-04-25 02:49:16',NULL);
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,7 +317,7 @@ CREATE TABLE `subestatus` (
 
 LOCK TABLES `subestatus` WRITE;
 /*!40000 ALTER TABLE `subestatus` DISABLE KEYS */;
-INSERT INTO `subestatus` VALUES (1,1,'Recibido por soporte','Ticket recibido por el área correspondiente',1),(2,1,'Pendiente de asignación','Aún no asignado a un técnico específico',1),(3,2,'En diagnóstico','Se está evaluando el problema reportado',1),(4,2,'En reparación','Ya se inició la solución del problema',1),(5,2,'Esperando validación interna','Esperando confirmación de un área técnica',1),(6,3,'Esperando respuesta del usuario','Se necesita información adicional del usuario',1),(7,3,'Esperando evidencia del usuario','Se necesita evidencia adicional del usuario',1),(8,3,'Esperando repuesto','A la espera de una pieza o recurso físico',1),(9,3,'Esperando disponibilidad técnica','Soporte técnico no disponible temporalmente',1),(10,4,'Escalado a nivel 2','Derivado a soporte técnico especializado',1),(11,4,'Escalado a proveedor externo','Caso enviado al fabricante o proveedor',1),(12,5,'Solución aplicada','El técnico aplicó la solución al incidente',1),(13,5,'Pendiente de confirmación del usuario','Esperando validación por parte del usuario',1),(14,6,'Cierre automático','Cierre automático por inactividad del usuario',1),(15,6,'Cierre por confirmación del usuario','Cierre solicitado o validado por el usuario',1),(16,7,'Cancelado por error de reporte','El ticket fue reportado por equivocación',1),(17,7,'Cancelado por duplicado','El ticket es duplicado de uno existente',1);
+INSERT INTO `subestatus` VALUES (1,1,'Pendiente de asignación','Aún no asignado a un técnico específico',1),(2,1,'Recibido por soporte','Ticket recibido por el área correspondiente',1),(3,2,'En diagnóstico','Se está evaluando el problema reportado',1),(4,2,'En reparación','Ya se inició la solución del problema',1),(5,2,'Esperando validación interna','Esperando confirmación de un área técnica',1),(6,3,'Esperando respuesta del usuario','Se necesita información adicional del usuario',1),(7,3,'Esperando evidencia del usuario','Se necesita evidencia adicional del usuario',1),(8,3,'Esperando repuesto','A la espera de una pieza o recurso físico',1),(9,3,'Esperando disponibilidad técnica','Soporte técnico no disponible temporalmente',1),(10,4,'Escalado a nivel 2','Derivado a soporte técnico especializado',1),(11,4,'Escalado a proveedor externo','Caso enviado al fabricante o proveedor',1),(12,5,'Solución aplicada','El técnico aplicó la solución al incidente',1),(13,5,'Pendiente de confirmación del usuario','Esperando validación por parte del usuario',1),(14,6,'Cierre automático','Cierre automático por inactividad del usuario',1),(15,6,'Cierre por confirmación del usuario','Cierre solicitado o validado por el usuario',1),(16,7,'Cancelado por error de reporte','El ticket fue reportado por equivocación',1),(17,7,'Cancelado por duplicado','El ticket es duplicado de uno existente',1);
 /*!40000 ALTER TABLE `subestatus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,16 +330,17 @@ DROP TABLE IF EXISTS `tickets`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tickets` (
   `t_id` int NOT NULL AUTO_INCREMENT,
-  `t_num` varchar(20) NOT NULL,
-  `t_tit` varchar(250) NOT NULL,
+  `t_num` varchar(20) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `t_tit` varchar(250) COLLATE utf8mb4_spanish_ci NOT NULL,
   `area_id` int NOT NULL,
   `emp_id` int NOT NULL,
+  `t_phone` varchar(15) COLLATE utf8mb4_spanish_ci NOT NULL,
   `cat_id` int NOT NULL,
   `scat_id` int NOT NULL,
   `niv_id` int NOT NULL,
   `est_id` int NOT NULL,
   `sest_id` int DEFAULT NULL,
-  `t_desc` varchar(9000) NOT NULL,
+  `t_desc` varchar(9000) COLLATE utf8mb4_spanish_ci NOT NULL,
   `t_crea` datetime NOT NULL,
   `t_upd` datetime NOT NULL,
   `t_close` datetime DEFAULT NULL,
@@ -358,7 +360,7 @@ CREATE TABLE `tickets` (
   CONSTRAINT `fk_ticket_prioridad` FOREIGN KEY (`niv_id`) REFERENCES `prioridad` (`n_id`),
   CONSTRAINT `fk_ticket_subcategoria` FOREIGN KEY (`scat_id`) REFERENCES `subcategorias` (`sc_id`),
   CONSTRAINT `fk_ticket_subestatus` FOREIGN KEY (`sest_id`) REFERENCES `subestatus` (`se_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,6 +369,7 @@ CREATE TABLE `tickets` (
 
 LOCK TABLES `tickets` WRITE;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
+INSERT INTO `tickets` VALUES (1,'TCK-20250423-000001','Primer ticket de prueba',12,1,'(234) 234-2342',2,7,4,1,1,'Descripción','2025-04-23 00:03:20','2025-04-23 00:03:20',NULL),(2,'TCK-20250423-000002','Segundo ticket de prueba',12,1,'(234) 234-2342',2,7,4,1,1,'<span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>','2025-04-23 00:04:20','2025-04-23 00:04:20',NULL),(3,'TCK-20250423-000003','Tercer ticket de prueba',1,1,'(345) 345-3453',7,33,4,1,1,'<span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>','2025-04-23 00:27:43','2025-04-23 00:27:43',NULL),(4,'TCK-20250423-000004','Cuarto Ticket de Prueba',11,1,'(123) 123-1231',2,7,4,1,1,'<span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>','2025-04-23 00:30:20','2025-04-23 00:30:20',NULL);
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -379,4 +382,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-19  0:50:06
+-- Dump completed on 2025-04-25 20:35:01

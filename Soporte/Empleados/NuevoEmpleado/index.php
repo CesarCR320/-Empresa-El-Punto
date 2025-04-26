@@ -67,28 +67,18 @@
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="e_pass">Contraseña</label>
                                     <input type="password" class="form-control" name="e_pass" id="e_pass" required>
-                                    <!-- <div class="form-control-wrapper">
-										<input id="signup_v1-password"
-											   class="form-control"
-											   name="signup_v1[password]"
-											   type="password" data-validation="[L>=6]"
-											   data-validation-message="$ must be at least 6 characters">
-									</div> -->
                                 </fieldset>
                             </div>
-                            <!-- <div class="col-lg-4">
+                            <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="e_pass">Confirmar contraseña</label>
-                                    <input type="password" class="form-control" name="e_pass" id="e_pass">
-                                    <div class="form-control-wrapper">
-										<input id="signup_v1-password-confirm"
-											   class="form-control"
-											   name="signup_v1[password-confirm]"
-											   type="password" data-validation="[V==signup_v1[password]]"
-											   data-validation-message="$ does not match the password">
-									</div>
+                                    <label class="form-label semibold" for="e_stat">Estatus</label>
+                                    <select id="e_stat" name="e_stat" class="form-control" required>
+                                        <option value="" disabled selected>- Seleccione un puesto -</option>
+                                        <option value="1" disabled selected>Activo</option>
+                                        <option value="0" disabled selected>Inactivo</option>
+                                    </select>
                                 </fieldset>
-                            </div> -->
+                            </div>
                         </div><!--.row-->
 
                         <h5 class="m-t-lg with-border semibold">Área y puesto en la empresa</h5>
