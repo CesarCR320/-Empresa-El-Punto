@@ -47,7 +47,7 @@ class managercompras {
     public function obtenerCompra($id) {
         $query = "SELECT c.*, p.nombre as nombre_proveedor 
                  FROM compras c 
-                 JOIN proveedores p ON c.proveedor_id = p.id 
+                 JOIN proveedores_compras p ON c.proveedor_id = p.id 
                  WHERE c.id = ?";
         
         $stmt = $this->conexion->prepare($query);
